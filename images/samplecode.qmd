@@ -1,0 +1,10 @@
+```python
+a = int(input("Enter a number: "))
+b = int(input("Enter another number: "))
+print(f"{a} raised to the power {b} is {a**b}")
+```
+
+If you are using IDLE, this is what your window should look like.
+
+![Basic python file in IDLE](images/Lesson04-08.png)
+
