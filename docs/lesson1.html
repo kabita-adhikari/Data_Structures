@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Java Preliminaries - Introduction to Data Structures &amp; Complexity</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#complexity" id="toc-complexity" class="nav-link active" data-scroll-target="#complexity"><span class="header-section-number">1</span> Complexity</a></li>
+  <li><a href="#dinner-party" id="toc-dinner-party" class="nav-link" data-scroll-target="#dinner-party"><span class="header-section-number">2</span> Dinner Party</a></li>
+  <li><a href="#starting-with-the-algorithm" id="toc-starting-with-the-algorithm" class="nav-link" data-scroll-target="#starting-with-the-algorithm"><span class="header-section-number">3</span> Starting with the algorithm</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to Data Structures &amp; Complexity</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>A data structure is a way of storing data in a computer so that it can be used efficiently. In your programming experience so far, you have used some data structures but may not have known that they were data structures. An array is an example of a data structure. The elements are arranged in contiguous memory locations so that they can be accessed, stored, and manipulated quickly. Other types of data structures include sets, unions, records, graphs, trees, etc. Do not confuse data types and data structures. Think of data types as atoms and data structures as molecules. Examples of data types are int, short, long, float, double, char, boolean, etc. So we’ve said that we store data in data structures so that it can be manipulated efficiently, but what exactly does that mean? Manipulation usually means searching, sorting, changing, etc. We normally process some form of input efficiently to generate the “right” output. Data structures allow us to store this data in a way that makes the processing better.</p>
+<p>Data structures is essentially what this class is about (as I have mentioned before on many occasions). We will spend the rest of this quarter looking at different commonly used data structures and how we can use them in our code.</p>
+<section id="complexity" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Complexity</h1>
+<p>Computer Scientists are weird people. Whereas the rest of the world is looking at the best times as a measure of effectiveness and excellence, we are looking at the worst time. Usain bolt is celebrated as a runner because he run 100m in 9.58s. In fact, every four years, the whole world stops to watch and celebrate different people demonstrate the best of the best when it comes to physical feats. In computer science, we are more interested in the worst case. This is partly because knowing the worst case allows us to give hard guarantees in our estimates, and prepare for deadlines. After all, the saying is “hope for the best, prepare for the worst.”</p>
+<p>To represent this “worst case” we use what is referred to as a <strong>big-O notation</strong> as a measure of how well or poor an algorithm is. This might seem counter intuitive since run time seems the natural unit to measure the performance of an algorithm. However, while run time is a very accurate time measure, it is a very inaccurate algorithm comparison measure. This is because A LOT of factors affect the runtime of an algorithm and many of them have nothing to do with the algorithm itself which is what we are interested in.</p>
+<p>For example, if I gave you a program to sort some numbers and after executing it, you determined that it took 5 seconds to run. That 5 seconds cannot tell you whether it is better than another sorting program that your colleague executed in 8 seconds. Why? How much of that 5 seconds run time is down to the computer system one is using (faster processor)? Or the programming language that it was coded in? Or the skill level of the programmer? Or the specific state of the list that was to be sorted (since it might take a short time for a list that was already sorted)? Or the size of the list that was sorted? Almost all these factors that affect the runtime have nothing to do with the “goodness” or “badness” of the actual algorithm which is what we are interested in in order to compare it with another algorithm.</p>
+<p>Big-O is the computer scientist’s answer to all these problems. It is inexact by design and it is this feature that typically confuses people who are looking at big-O for the first time. In a bid to ignore all the non- factors we mentioned earlier, big-O describes the performance of an algorithm in terms of a variable (typically n) that represents the size of the problem. In fact, the big-O notation shows how dependent the algorithms runtime would be on the size of the input data. This data could be anything from the size of a string, to the size of an array, to the size of the problem space, to the number of guests, to the number of slices of pizza. This allows us to shed the fine details and divide problems into categories or broad classes based entirely on how they perform as the size of the data is increased.</p>
+</section>
+<section id="dinner-party" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Dinner Party</h1>
+<p>As an example, let us consider this scenario [1]. You are preparing to host a dinner party and this task involves a lot of algorithms which we shall discuss and then categorize using their big-O notation (i.e.&nbsp;how they perform as the data size increases).</p>
+<p>The first task on your to-do list is cleaning your house. This task does not depend on the number of guests that we are inviting to the dinner party (n). It could take either 3 days or 3 hours (depending on the size of your house) but this is of no consequence to a computer scientist. Since this problem does not change its runtime when the number of guests changes, it is referred to as a <strong>constant time problem</strong> or <span class="math inline">\(O(1)\)</span>.Notice that the variable n does not appear in the parentheses because its run time does not depend on n.</p>
+<p>When your guests are at the table, another task on your to-do list is to pass the plate of hors d’oeuvres (its a fancy dinner party) around the table. Clearly the amount of time that this task will take will depend directly on the number of guests at the party. If its just 3 people, it should take about half the amount of time as if it was 6 people. And a dinner party of 300 people would take 100 times as long as the 3. This kind of problem is referred to as a <strong>linear</strong> problem or <span class="math inline">\(O(n)\)</span>. Because big-O is inexact, we don’t care about any multiplicative factors. In the context of this example, we don’t care whether the dish has to be passed round twice or once. To big-O, these are both the same i.e.&nbsp;linear because whether you pass the dish around once or twice, the runtime will grow linearly with the number of guests you invite.</p>
+<p>In fact, adding a constant subtask does not change its big-O. Making an announcement (which is O(1)) before passing round the hors d’oeuvres (O(n)) still remains O(n) because the runtime for the combined task will still be linear with respect to the number of guests invited. Making an announcement and then passing the dish around a table of 10 will still be about half as short as making an announcement and then passing the dish around a table of 20. This ignoring of less important factors is particularly difficult to wrap your mind around when the constant time factor is a big factor. For example, remodeling your kitchen (O(1)) and then passing the dish around is still in the same category as just passing the dish around even though the first one will take significantly longer. They are in the same category because as the size of the data increases (n), they respond in the same way i.e.&nbsp;linearly.</p>
+<p>Another task could be having every guest hug each other when they arrive. If there are just two guests, only one hug would be required. With 10 guests, 45 hugs would be required. With 50 guests, 1225 hugs. With 100 guests, 4950 guests. It is easy to tell that the runtime of this problem grows at a faster rate than the size of the problem i.e.&nbsp;the number of hugs becomes larger at a faster rate than that at which the number of guests grows. In fact, this problem falls in the <strong>polynomial</strong> category; more specifically the <strong>quadratic</strong> kind <span class="math inline">\(O(n^2)\)</span>. This means that if the nput data size doubles, the runtime will increase by a factor of 4. Again any multiplicative or smaller factors don’t matter in big-O. For example, if your task involved everyone hugging each other, then passing a dish around the table, as well as a speech at the beginning of the dinner, the whole task would be <span class="math inline">\(O(n^2)\)</span> because of all the subtasks, it is the <span class="math inline">\(O(n^2)\)</span> factor that will dominate the runtime of the algorithm (i.e.&nbsp;it is the task that will grow most significantly as the input data size increases). Recall that big-O is inexact. We are only trying to capture an expression that represents how its runtime will grow with an increasing data size. Imagine that your dinner guests got involved in a game that required you to stand them in order of height for a game. The sorting algorithms you are familiar with from the Living With Cyber series (e.g.&nbsp;bubble sort) would fall into the O(n2) family. Sorting a group of 100 people will take 100 times as long as sorting a group of 10 people even if the size of the group has only increased by a factor of 10.</p>
+<p>Suppose that as dinner host, your roles involve having short conversations with not just everyone individually, but every possible grouping of your guests. For example with 3 guests, A, B and C. You have to have a conversation with A, B, C, AB, AC, BC, and ABC (i.e.&nbsp;7 conversations). You don’t need to be an introvert to be daunted by such a task because it grows even faster than the quadratic category discussed earlier. With 4 guests (ABCD), you would need to have 15 conversations i.e.&nbsp;A, B, C, D, AB, AC, AD, BC, BD, CD, ABC, ABD, ACD, BCD, and ABCD. Notice how adding a single guest has basically doubled the amount of work you have to do. It would require 31 conversations for 5 guests, and 63 for 6 guests. This category of problems is <strong>exponential</strong> or <strong><span class="math inline">\(O(2^n)\)</span></strong>, and algorithms in this category are typically avoided because their runtimes get very ugly even for relatively small data sizes. You might recall that we discussed the towers of Hanoi in the Living with Cyber series. The best solution to Towers of Hanoi falls in this category.</p>
+<p>One other task as dinner host could be deciding how to seat all your guests. Perhaps your guests are very particular about how they should be seated, who they seat next to, etc. Figuring out a seating arrangement even with basic limitations might involve enumerating all the different seating possibilities, and then ranking them and choosing the best. For example, with three guests (ABC), they could be sat as ABC, ACB, BAC, BCA, CBA or CAB. This means that with just 3 guests, I have to write out and compare 6 different seating arrangements. With 4 guests (ABCD), they could be arranged as ‘ABCD’, ‘ABDC’, ‘ACBD’, ‘ACDB’, ‘ADBC’, ‘ADCB’, ‘BACD’, ‘BADC’, ‘BCAD’, ‘BCDA’, ‘BDAC’, ‘BDCA’, ‘CABD’, ‘CADB’, ‘CBAD’, ‘CBDA’, ‘CDAB’, ‘CDBA’, ‘DABC’, ‘DACB’, ‘DBAC’, ‘DBCA’, ‘DCAB’, or ‘DCBA’ for a grand total of 24 arrangements. This category is perhaps the worst of the worst and is referred to as <strong>factorial</strong> or <strong><span class="math inline">\(O(n!)\)</span></strong>. This explains why making seating arrangements at weddings is a very stressful and time intensive venture.</p>
+<p>One last task. Supposed that in the game we mentioned earlier (where your guests are standing in order of height), you have a task of figuring out whom among your guests has a specific height (which is given in units you are unfamiliar with but which your guests are comfortable with). A quick approach (which should also be familiar to you) would be to go to the middle of the line, and ask that guest if he/ she is the height you’re looking for. It should also be easy to determine whether he/she is taller or shorter than the required height, and as a result you will discard half your guest list from possible suspects. This is similar to the binary search algorithm that you are familiar with. As discussed in Living with Cyber, this algorithm belongs in the <strong>logarithmic</strong> category or <strong><span class="math inline">\(O(log_2n)\)</span></strong>. Algorithms in this category typically reduce the size of the data at each step (by half in this case).</p>
+<p>There is another major category called the <strong>quasi-linear / linearithmic</strong> or <strong><span class="math inline">\(O(nlog_2n)\)</span></strong>. It doesn’t grow as fast as O(n2) but is faster than O(n). There are a few sorting algorithms that fall into this category that we will be discussing later in the course.</p>
+<p>Broadly speaking, those are the main big-O categories. Once you understand them, you should be able to look at different algorithms and determine which group or family they belong to. Sometimes this involves looking at the algorithm itself, and other times it involves looking at a mathematical expression for its runtime, <span class="math inline">\(T(n)\)</span> given in terms of its data size, <span class="math inline">\(n\)</span>. Can you describe the order of growth from these functions using the big-O notation?<br>
+<span class="math display">\[n^3 +2n\]</span> <span class="math display">\[2n^3 + n^2\]</span> <span class="math display">\[n+2nlog(n)\]</span> <span class="math display">\[3n +2n^7\]</span> <span class="math display">\[n(n+3)/2\]</span> <span class="math display">\[6\]</span> <span class="math display">\[1+n^2 +2n^3+3n^4+2^n\]</span> <span class="math display">\[n^3+2n log(n)\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember the trick is to pick the dominant term and ignore the constants. Basically which term will get out of hand as n increases to really large values?</p>
+</div>
+</div>
+</section>
+<section id="starting-with-the-algorithm" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Starting with the algorithm</h1>
+<p>Keeping with food, let’s look at a few algorithms you must have used at some point in your lives [2].</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>public donut takeDonut(donut [] box)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    return box[0]; //return the donut in the first position of donut box</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What complexity do you think the algorithm above demonstrates? Does it depend on the number of donuts in the box?</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>public void eatFries(fries [] box)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    for(int i = 0; i &lt; box.length; i++)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        //dip chip in ketchup</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        //eat fry</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What about the complexity of the algorithm above? What kind of relationship is there between its runtime and the number of fries in the box?</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>// Every guest comes with a different kind of food   to a potluck i.e. number</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>// of guests is the same as the types of food</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>public void divideFood(ArrayList&lt;Food&gt;potluck)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    // for each dish in the potluck</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    for (Food dish : potluck)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        // divide food into proper portion sizes based on guest list size.</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        for (int j = 0; j &lt; potluck.size(); j++)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            // cut up the food</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What about the algorithm above? Cutting up the food grows as the amount of food in the potluck grows? Does it grow in a linear fashion or not? Play through the scenario in your head to see if you can recognize the pattern. Two people, everything is cut into two pieces (for a total of 4 portions). Three people, everything is cut into three pieces (for a total of 9 portions). Four people, four pieces each (16 total portions).</p>
+<p>For simple algorithms, you might be able to simply look at the algorithm and determine what its complexity is. However, more often that not you will need to carry out what is referred to as a Time analysis. It involves identifying the parts of the algorithm where repetition is carried out (since repetition is the main factor that would affect runtime especially as the input size increases) and then writing out a mathematical expression (T(n)) that describes how long a basic statement in that loop would be executed. Once the T(n) expression has been completed, determining the O() is just a matter of <strong>identifying the most dominant term in the expression and ignoring any constants</strong>. Let’s look at a few examples of code and see if we can deduce their complexities.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>for (int k=0; k&lt;n; k++)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    ...      // How many times will this statement be executed?</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Any line in the <span class="math inline">\(for\)</span> loop above will be executed n times. Therefore <span class="math inline">\(T(n) = c*n\)</span> and its complexity is O(n). The constant term c is a multiplier we use to define how long the statements in the loop would take to execute in a single iteration. What about the one below.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>for (int k=0; k&lt;n; k++)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    ...     // How many times will this statement be executed?</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    for (int j=0; j&lt;n; j++)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        ...    //What about this statement?</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math inline">\(T(n) = cn^2 + dn\)</span> which means it is <span class="math inline">\(O(n^2)\)</span>.</p>
+<p>Those were fairly straight forward. What about these ones?</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>for (k=0; k&lt;n/2; k++)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    ...  // This statement occurs n/2 times</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    for (j=0; j&lt;n*n; j++)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        ...  //This statement occurs n*n*n/2 = n^3/2 times</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math inline">\(T(n) = (cn^3 +dn)/2\)</span> which means it is <span class="math inline">\(O(n^3)\)</span>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>for (k=0; k&lt;n/2; k++)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    ...  // This statement occurs n/2 times</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>for (j=0; j&lt;n*n; j++)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    ...  //This statement occurs n*n = n^2 times</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math inline">\(T(n) = cn^2 +(dn)/2\)</span> which means it is <span class="math inline">\(O(n^2)\)</span>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>k = n;</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>while (k &gt; 1)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    k /= 2;  //integer division - log2n</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math inline">\(T(n) = c*log_2n\)</span> which means it is <span class="math inline">\(O(log_2n)\)</span>.<br>
+<span class="math inline">\(log_2n\)</span> implies division by 2.<br>
+<span class="math inline">\(log_3n\)</span> implies division by 3.<br>
+<span class="math inline">\(log_4n\)</span> implies division by 4…and so on.<br>
+<br>
+</p>
+<p>Sometimes calculating the actual number of steps from the T(n) expression will give you an idea of what the dominant term is based on how fast it grows with an increasing n.&nbsp;For example, suppose the time T (number of steps) it takes for a hypothetical algorithm to complete a problem of size n is given by the expression <span class="math display">\[T(n) = 4n^2 – 2n + 2\]</span> Then we know that if our size is 1, it will take <span class="math display">\[T(1) = 4 – 2 + 2 = 4 steps\]</span> If our size is 10, it will take <span class="math display">\[T(10) = (4 * 10^2) – (2 * 10) + 2 = 382 steps\]</span> If our size is 100, it will take <span class="math display">\[T(100) = (4 * 100^2) – (2 * 100) + 2 = 39802 steps\]</span> and if our size is 1000, it will take <span class="math display">\[T(1000) = (4 * 1000^2) – (2 * 1000) + 2 = 3999802 steps\]</span></p>
+<p>You will have noticed that while our input was only increasing by a factor of 10, the number of steps was increasing by a factor of 100…ish. This is because the dominant term of T(n) is <span class="math inline">\(n^2\)</span> and so we can describe the complexity of this hypothetical algorithm as being <span class="math inline">\(O(n^2)\)</span>.</p>
+<p>Once we have the big-O notation, it can then be used to provide an estimate (admittedly a very poor estimate) of the amount of time (or number of steps) that an algorithm would require for a given data size and then compare it with other algorithms without actually taking the time to implement either algorithm in code. For example given <span class="math inline">\(O(n^2)\)</span> where n is 1000, the algorithm would take approximately: <span class="math display">\[O(1000) ≈ 1000^2 = 1000000 steps\]</span></p>
+<p>The number of steps can then later be translated to time if you know how long the average step would take on a specific system.</p>
+<p>Below is a table showing the most common big-O categories and some common examples of algorithms in those categories [3].</p>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 16%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Big-O</th>
+<th>Name</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(O(1)\)</span></td>
+<td>constant</td>
+<td><ul>
+<li>Accessing an element in an array given its index e.g. Getting the first element of a list</li>
+<li>Checking if a number is even or odd</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(O(logn)\)</span></td>
+<td>logarithmic</td>
+<td><ul>
+<li>cures scurvy</li>
+<li>tasty</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(O(n)\)</span></td>
+<td>linear</td>
+<td><ul>
+<li>Linear search eg.finding the maximum element in a list</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(O(nlogn)\)</span></td>
+<td>quasi-linear</td>
+<td><ul>
+<li>Advanced sorting algorithms e.g.&nbsp;mergesort</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(O(n^2)\)</span></td>
+<td>Quadratic</td>
+<td><ul>
+<li>Basic sorting algorithms e.g.&nbsp;bubblesort</li>
+<li>Searching for duplicates in a list*</li>
+<li>Dealing with a two dimensional array</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(O(n^3)\)</span></td>
+<td>Cubic</td>
+<td><ul>
+<li>Dealing with a three dimensional array</li>
+<li>Solving a three variable equation</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(O(2^n)\)</span></td>
+<td>Exponential</td>
+<td><ul>
+<li>Finding all subsets of a data collection</li>
+<li>Towers of Hanoi</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(O(n!)\)</span></td>
+<td>Factorial</td>
+<td><ul>
+<li>Finding all permutations of a given data collection e.g.&nbsp;figuring out a password given all the characters of the password.</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+<p>Just a few last tips on identifying the dominant term from an expression.</p>
+<ul>
+<li>n dominates <span class="math inline">\(log_bn\)</span> (b is often 2)<br>
+</li>
+<li><span class="math inline">\(nlog_bn\)</span> dominates n</li>
+<li><span class="math inline">\(n^m\)</span> dominates <span class="math inline">\(n^k\)</span> when m&gt;k</li>
+<li><span class="math inline">\(a^n\)</span> dominates <span class="math inline">\(n^m\)</span> for any values of a and m greater than 1.</li>
+</ul>
+<p><br> <br> Ref:<br> Algorithms to Live By, by Brian Christian and Tom Griffiths https://vickylai.com/verbose/a-coffee-break-introduction-to-time-complexity-of-algorithms/ https://adrianmejia.com/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/ Object Oriented Data Structures using Java (4th Edition). Nell Dale, Daniel T. Joyce, Chip Weems.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
