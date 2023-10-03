@@ -1,0 +1,141 @@
+---
+title: "5(b): Generics"
+format:
+   html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    code-block-bg: true
+    code-block-border-left: true
+---
+
+We are going to take a detour and discuss generics in java. Recall that method declarations in java typically have a data type associated with it. This allows the compiler to do some checking to make sure that our functions are used for the purposes for which we designed them and only deal with the data they’ve been designed to deal with. Sometimes, however, that can be very restrictive and lead 
+to code duplication.
+
+# Generics: The case for
+Imagine a very simple situation where you have to design a function that printed out the elements of an array that it received as an argument. Your first attempt might look something like this.
+
+```{.default}
+public static void printArray(int [] arr)
+{
+    for (int i = 0; i < arr.length; i++)
+    System.out.print(arr[i] + “, “);
+    System.out.println();
+}
+```
+
+Which is a very good attempt...until you realise that the function calling the printArr function will not always send you an integer array
+
+```{.default}
+public static void main(String [] args)
+{
+    int [] x = {1, 2, 3, 4, 5, 6, 7};
+    printArr(x);
+
+    double [] y = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7};
+    printArr(y);
+    
+    // ...
+}
+```
+
+Your first attempt to resolve this issue could be overloading the printArr function (i.e. creating another printArr func
+tion that has a different signature just to deal with the doubles).
+
+```{.default}
+public static void printArray(int [] arr)
+{
+    for (int i = 0; i < arr.length; i++)
+    System.out.print(arr[i] + “, “);
+    System.out.println();
+}
+public static void printArray(double [] arr)
+{
+    for (int i = 0; i < arr.length; i++)
+        System.out.print(arr[i] + “, “);
+    System.out.println();
+}
+```
+
+But this approach leads to a lot of code duplication. Suppose you also need a printArr for characters, etc.
+
+Generics allow us to form our own type names as a place holder for whatever typethe function (or class) eventually ends up dealing with. That way, you can have a function that will work when it is given integers, or doubles, or characters.
+
+
+# Generic Methods
+Designing methods to deal with generics requires a few changes from our typical method/function design.
+
+1. The function signature now also has a **type parameter** section that comes **before** the return type of the method. The type parameter section starts with a < and ends with a >.
+
+2. The type parameter section contains one or more identifier names that you as the programmer choose as a place holder for any type that the function will end up dealing with. If one ends up using more than one generic type inthe same function, the identifier names are comma separated.
+
+3. These identifier names can then be used to declare the return type or the types of arguments that the function will be receiving as parameters.
+
+4. The body of the function looks very similar to a normal function body. Keep in mind that the identifier name is used instead of the more restrictive type. These types can only be used as place holders for types that are passed by reference and not by value. This means that it won’t work for primitive types such as int, char, double, but it will work for object types such as Integer, Character, Double, or any objects from classes that we have designed ourselves.
+
+```{.default}
+public static <mytype> void printArray(mytype [] arr)
+{
+    for (int i = 0; i < arr.length; i++)
+        System.out.print(arr[i] + “, “);
+    System.out.println();
+}
+public static void main(String [] args)
+{
+    Integer [] x = {1, 2, 3, 4, 5, 6, 7};
+    printArr(x);
+    
+    Double [] y = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7};
+    printArr(y);
+    // ...
+}
+```
+
+# Generic Classes
+Sometimes the instance variables in a class (as well as a few functions) need to be unshackled from just one type. For example, perhaps you want your List to be able to store more than just ints.
+
+For this to work, the parameter type section has to be included in the class definition after the class name (but before the opening curly brace).
+
+When the objects are being declared, the actual data type has to be used.
+
+```{.default}
+class Node<mytype>
+{
+    private mytype data;
+    private Node link;
+    
+    public mytype getData()
+    {
+        return this.data;
+    }
+    
+    // other functions
+}
+
+class NodeTest
+{
+    public static void main(String [] args)
+    {
+        Node<Integer> a = new Node<Integer>(); // node storing an integer
+        Node<Double> b = new Node<Double>(); // node storing a double
+        Node<Character> c = new Node<Character>(); // node stores characters.
+        //…
+    }
+}
+```
+::: {.callout}
+demo with examples of generic methods and classes.
+Make sure to show and interpret the error messages that are shown as a result.
+:::
+
+# Bounded type parameters
+Sometimes the flexibility afforded by generic types is too much and you want to limit it a little i.e. allow only some types but not every single type. In this case, you adjust the type parameter from just having an identifier name, but also the **extends** keyword followed by an upper bound. This upper bound can be a super class or interface that all the types you actually want to allow belong to.
+
+```{.default}
+public static <mytype extends Number> mytype getMax(mytype a, mytype b)
+{
+    if (a.floatValue() > b.floatValue())
+        return a;
+    return b;
+}
+```

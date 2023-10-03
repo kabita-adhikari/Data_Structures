@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Java Preliminaries - Linked Lists</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#abstract-data-typesadt" id="toc-abstract-data-typesadt" class="nav-link active" data-scroll-target="#abstract-data-typesadt"><span class="header-section-number">1</span> Abstract data types(ADT)</a></li>
+  <li><a href="#linked-lists" id="toc-linked-lists" class="nav-link" data-scroll-target="#linked-lists"><span class="header-section-number">2</span> Linked Lists</a>
+  <ul class="collapse">
+  <li><a href="#adding-a-node-to-the-list" id="toc-adding-a-node-to-the-list" class="nav-link" data-scroll-target="#adding-a-node-to-the-list"><span class="header-section-number">2.1</span> Adding a node to the list</a></li>
+  <li><a href="#traversing-the-list" id="toc-traversing-the-list" class="nav-link" data-scroll-target="#traversing-the-list"><span class="header-section-number">2.2</span> Traversing the list</a></li>
+  <li><a href="#inserting-items-into-the-list" id="toc-inserting-items-into-the-list" class="nav-link" data-scroll-target="#inserting-items-into-the-list"><span class="header-section-number">2.3</span> Inserting items into the list</a></li>
+  <li><a href="#deleting-items-from-the-list" id="toc-deleting-items-from-the-list" class="nav-link" data-scroll-target="#deleting-items-from-the-list"><span class="header-section-number">2.4</span> Deleting items from the list</a></li>
+  </ul></li>
+  <li><a href="#building-a-linked-list" id="toc-building-a-linked-list" class="nav-link" data-scroll-target="#building-a-linked-list"><span class="header-section-number">3</span> Building a linked list</a>
+  <ul class="collapse">
+  <li><a href="#building-forward" id="toc-building-forward" class="nav-link" data-scroll-target="#building-forward"><span class="header-section-number">3.1</span> Building forward</a></li>
+  <li><a href="#building-backward" id="toc-building-backward" class="nav-link" data-scroll-target="#building-backward"><span class="header-section-number">3.2</span> Building backward</a></li>
+  </ul></li>
+  <li><a href="#complexity-of-linked-lists." id="toc-complexity-of-linked-lists." class="nav-link" data-scroll-target="#complexity-of-linked-lists."><span class="header-section-number">4</span> Complexity of Linked lists.</a></li>
+  <li><a href="#other-kinds-of-linked-lists" id="toc-other-kinds-of-linked-lists" class="nav-link" data-scroll-target="#other-kinds-of-linked-lists"><span class="header-section-number">5</span> Other kinds of linked lists</a>
+  <ul class="collapse">
+  <li><a href="#doubly-linked-lists" id="toc-doubly-linked-lists" class="nav-link" data-scroll-target="#doubly-linked-lists"><span class="header-section-number">5.1</span> Doubly linked lists</a></li>
+  <li><a href="#circular-linked-lists" id="toc-circular-linked-lists" class="nav-link" data-scroll-target="#circular-linked-lists"><span class="header-section-number">5.2</span> Circular linked lists</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Linked Lists</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="abstract-data-typesadt" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Abstract data types(ADT)</h1>
+<p>Abstract data types are ways of representing abstract information. Its basically a specification of a set of data, and a set of possible operations that can be performed on that data. They are meant to be a representation of certain types of data from the point of view of the user of this data.</p>
+<p>For example, we’ve just completed the EasyList assignment in which we created a list data type. In the back end, we used an array to store this list. However, on the front end (in the ListTest.java), we only had access to specific functions and methods that allowed us to manipulate the list in specific ways.</p>
+<p>So a list is an example of an abstract data type. In our assignment, it only stored integers (so its set of data is integers), and the possible operations that we could perform on that data were deletion, insertion, initialization, e.t.c.</p>
+<p>Typical list operations include - initialization - determining whether the list is empty - displaying the list - finding the length of the list - retrieving information stored in the first element - retrieving information stored in the last element - searching the list for a given item - inserting an item into the list - deleting an item from the list - making a copy of the list In that assignment, we used arrays to implement the backend of this abstract data type but there are some shortcomings with that approach, chief of which is the inability of the list to grow to whatever size is necessary. Recall that we had a maximum size of the array, and that even if our list had fewer items, the computer technically had set aside the maximum size for our list. Additionally, if our list was full, there was no way to increase its size during run time.</p>
+<p>Another way of implementing the list is using what are referred to as linked lists. These lists use references ( referred to as pointers in other languages), to allow the list to grow and/or shrink as needed. Additionally, linked lists don’t have to be stored in contiguous memory locations.</p>
+</section>
+<section id="linked-lists" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Linked Lists</h1>
+<p>A linked list is a versatile general purpose storage data structure. It is made up of components called <strong>nodes</strong>. Every node in a linked list is made up of two parts: the relevant data that it is trying to store, and the address of (or a <strong>link</strong> to) the next node in the list. All nodes, except the last, will point to the next node using that link. The address of the first node is stored in a separate location called the <strong>head</strong> or <strong>first</strong>. The diagram below is a pictorial representation of a node.</p>
+<p><img src="images/A1.svg" class="img-fluid" style="display: block; margin: 0 auto;;width:25.0%"></p>
+<p>The diagram below is the pictorial representation of a linked list. The arrow in each node shows that the address of the node being pointed to by the arrow is stored in that node i.e.&nbsp;it shows the node that is being referenced or pointed to by the address in the link section of the given node. The down arrow in the last node indicates that its link field is <em>null</em>.</p>
+<p><img src="images/A2.svg" class="img-fluid" style="width:95.0%"></p>
+<p>In reality, the linked list looks more like the diagram below where the link portion of the node stores the address of the next node.</p>
+<p><img src="images/B1.svg" class="img-fluid" style="width:95.0%"></p>
+<p>What about in code? What does a node look like in java. We’ll use a simple node where the data is an integer,and therefore our linked list will store multiple integers.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>class Node</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    private int data;                      //data is an integer.</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    private Node link;    //link is a reference to another Node.</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    public Node()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        this.data = 0;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        this.link = null;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    // and now for accessors and mutators</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    public int getData()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        return this.data;</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    public void setData(int value)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        this.data = value;</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    public void setLink(Node n)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        this.link = n;</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    public Node getLink()</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        return this.link;</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>Node head;      // head node created in another class/function.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="adding-a-node-to-the-list" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="adding-a-node-to-the-list"><span class="header-section-number">2.1</span> Adding a node to the list</h2>
+<p>Let’s see how we would create the list and add a node to it, and how it would look like diagrammatically.</p>
+<div class="table">
+<table class="table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 84%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Diagram</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Node head;                 Node curr;</code></td>
+<td><img src="images/C1.svg" class="img-fluid" style="width:15.0%"></td>
+</tr>
+<tr class="even">
+<td><code>head = new Node();</code></td>
+<td><img src="images/C2.svg" class="img-fluid" style="width:35.0%"></td>
+</tr>
+<tr class="odd">
+<td><code>head.setData(17);</code></td>
+<td><img src="images/C3.svg" class="img-fluid" style="width:35.0%"></td>
+</tr>
+<tr class="even">
+<td><code>curr = head;</code></td>
+<td><img src="images/C4.svg" class="img-fluid" style="width:35.0%"></td>
+</tr>
+<tr class="odd">
+<td><code>curr.setLink(new Node());      curr = curr.getLink();      curr.setData(10);</code></td>
+<td><img src="images/C5.svg" class="img-fluid" style="width:65.0%"></td>
+</tr>
+<tr class="even">
+<td><code>curr.setLink(new Node());     curr.getLink().setData(15);</code></td>
+<td><img src="images/C6.svg" class="img-fluid" style="width:65.0%"></td>
+</tr>
+<tr class="odd">
+<td><code>curr.getLink().setLink(new Node());     curr.getLink().getLink().set     Data(32);</code></td>
+<td><img src="images/C7.svg" class="img-fluid" style="width:85.0%"></td>
+</tr>
+<tr class="even">
+<td><code>curr =      curr.getLink().getLink();</code></td>
+<td><img src="images/C8.svg" class="img-fluid" style="width:85.0%"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>A few things to note about the code and diagrams above. - One creates a new node using the <em>new</em> keyword. - The links are one direction i.e.&nbsp;the address of the second is stored in the first, the address of the third is stored in the second, etc. Once the pointer has moved to the next node, there is no way of going back to the previous node unless you had either stored its value somewhere else, or you began from head again.</p>
+</section>
+<section id="traversing-the-list" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="traversing-the-list"><span class="header-section-number">2.2</span> Traversing the list</h2>
+<p>Recall that we can only move down the list in one direction. Typically, the link of the last node of the linked list will be <em>null</em>. We can use these properties to traverse the list. This comes in handy in scenarios, such as when one wants to print out the contents of the list starting with the head.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Node curr = head;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>while(curr != null)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    System.out.print(curr.getData() + “ “);</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                                //This could be any process that you want to do</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                                //with each node.</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    curr = curr.getLink();</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                                //AND then you have to move curr to the next </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                                //node using curr's link.</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>System.out.println();           //Any process to be done after traversing the </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                //list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="inserting-items-into-the-list" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="inserting-items-into-the-list"><span class="header-section-number">2.3</span> Inserting items into the list</h2>
+<p>So far we’ve seen how to add nodes to the end of the list. That process involves creating the node and storing its address in the link section of the last node in the list.</p>
+<p>Adding a node to the middle of the list is slightly different because we have to maintain the integrity of the list on both sides of the node that we are inserting.</p>
+<p>We shall look at the lines of code to insert a node after <em>curr</em> and how it looks diagrammatically.</p>
+<div class="table">
+<table class="table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 84%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Diagram</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Node newNode = new Node();     newNode.setData(72);</code></td>
+<td><img src="images/D1.svg" class="img-fluid" style="width:95.0%"></td>
+</tr>
+<tr class="even">
+<td><code>NewNode.setLink(curr.getLink());</code></td>
+<td><img src="images/D2.svg" class="img-fluid" style="width:95.0%"></td>
+</tr>
+<tr class="odd">
+<td><code>curr.setLink(newNode);</code></td>
+<td><img src="images/D3.svg" class="img-fluid" style="width:95.0%"></td>
+</tr>
+<tr class="even">
+<td><code>//which is technically the       //same as this diagram.</code></td>
+<td><img src="images/D4.svg" class="img-fluid" style="width:99.0%"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The order in those statements is very important. We make our new node point to the next node in the linked list, and the make the <em>curr</em> node point to our new node.</p>
+<p>Let us see what happens when we reverse that order.</p>
+<div class="table">
+<table class="table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 84%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Wrong Code</th>
+<th>Error Diagram</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Node newNode = new Node();     newNode.setData(72);</code></td>
+<td><img src="images/E1.svg" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td><code>curr.setLink(newNode);</code></td>
+<td><img src="images/E2.svg" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td><code>newNode.setLink(curr.getLink());</code></td>
+<td><img src="images/E3.svg" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td><code>//which is technically the       //same as this diagram.</code></td>
+<td><img src="images/E4.svg" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Notice that when I reverse the order of the lines of code (as shown above), I add the node in the right place BUT I lose access to the tail end of the list.</p>
+<p>Another way we can correctly add a node to list is by using two separate node references.</p>
+<div class="table">
+<table class="table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 69%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Diagram</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Node p, q;          //assuming they are          //both properly initialized         //and positioned.</code></td>
+<td><img src="images/F1.svg" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td><code>Node newNode = new Node();     newNode.setData(77);</code></td>
+<td><img src="images/F3.svg" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td><code>//Now the order of      //operation doesn't matter     //as much     p.setLink(newNode);     newNode.setLink(q);</code></td>
+<td><img src="images/F4.svg" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td><code>//it produces the same      //results if the order is      //changed.     newNode.setLink(q);     p.setLink(newNode);</code></td>
+<td><img src="images/F4.svg" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="deleting-items-from-the-list" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="deleting-items-from-the-list"><span class="header-section-number">2.4</span> Deleting items from the list</h2>
+<p>What about if we wanted to delete an item from the list. If the node we want to delete is the node after <em>curr</em>, we make <em>curr</em> point directly to the node that was pointed to by the node pointed to by <em>curr</em>. It sounds confusing but its really easy. If <em>a</em> pointed to <em>b</em> which pointed to <em>c</em>, we now just make <em>a</em> point to <em>c</em>. The code should make it clearer.</p>
+<div class="table">
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 79%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Diagram</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>//assuming this is what the list looks like and we want to delete the node with 56.</code></td>
+<td><img src="images/G1.svg" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td><code>curr.setLink(curr.getLink().getLink());</code></td>
+<td><img src="images/G2.svg" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Notice that the node with 56 is essentially deleted since there is no way to traverse to it. However, that memory still has information and is inaccessible to us i.e.&nbsp;the node is dangling. Java will eventually get rid of this using its garbage collection feature.</p>
+<div class="callout callout-style-simple callout-none no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Write some java code to demonstrate all the above?</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="building-a-linked-list" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Building a linked list</h1>
+<p>Even though the last program we looked at built a linked list, we are going to discuss it in more detail so that we can build a linked list in general. The kind of linked list that we build will depend on the data that we are reading and want to store in the list. If it is unsorted, the linked list will be unsorted too. Such a list can either be built forwards or backwards i.e.&nbsp;appending new nodes to the end of the list, or attaching them to the beginning of the list.</p>
+<section id="building-forward" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="building-forward"><span class="header-section-number">3.1</span> Building forward</h2>
+<p>We will need three pointers to build the list: one to point to the first (or head) which should not be moved, one to point to the last (or tail) node in the list, and one to create the new node. In this example, we’ll call them <em>first, last</em>, and <em>curr</em> respectively.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Node first, last, curr;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>int num;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>…</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>first = null;           //initially the list is empty and so we have to</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>last = null;            //appropriately initialize first and last.</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>…</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>curr = new Node();      //create a new node</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>curr.setData(12);       //store that input in the data portion of the node</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>…</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>//Now to add any kind of node to the list, we have to check to see whether the </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>//list is empty or not. If it is empty, we have to change both first and last,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>//Otherwise, we only have to change last.</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>if(first == null)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    first = curr;       //If it is empty, we have to change both first and last</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    last = curr;        //to point to the new and only node in our list</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>else</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    last.setLink(curr); //Otherwise, we have to change the old last to point</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    last = curr;        //to the new node, and change last to point to the</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>}                       //new last node.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The code above can be put into a loop to create the list in the forward direction. The **last* pointer allows us to insert the new node in the proper position without having to traverse the list for every node insertion. Without it, we would have to traverse the list from beginning to the end before inserting the node. It should be obvious that this becomes very inefficient as the size of the list grows.</p>
+</section>
+<section id="building-backward" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="building-backward"><span class="header-section-number">3.2</span> Building backward</h2>
+<p>When building backward, we insert the new node at the beginning of the list. We therefore do not need to have <em>last</em> BUT we’ll need <em>first</em>. BTW, It will always keep changing with each insertion.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Node first, curr;</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>int num;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>…</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>first = null;</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>…</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>curr = new Node();</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>curr.setData(10);</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>curr.setLink(null);</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>…</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>curr.setLink(first);   //make the new node point to the old first</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>first = curr;         //Then change first to point to the new node.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="complexity-of-linked-lists." class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Complexity of Linked lists.</h1>
+<p>So what are the big-O notations for the basic operations of lists? • Insertion in an unsorted list doesn’t depend on the size of the list because we are always keeping track of the end of the list: <span class="math inline">\(O(1)\)</span>. • Deletion requires us to find the appropriate node first, and this grows linearly with the size of the list: <span class="math inline">\(O(n)\)</span>. • Searching through the list is similar to searching through an array: <span class="math inline">\(O(n)\)</span>. • Traversing the list takes longer if the list is longer: <span class="math inline">\(O(n)\)</span>.</p>
+<p>Earlier we alluded to the idea of an ordered list. If items were kept in a specific order in the list, then insertion would NOT just be a matter of appending the node to the beginning or end of the list. Insertion would require us to search for the appropriate position before inserting it and therefore in the case of an ordered list, insertion is <span class="math inline">\(O(n)\)</span>.</p>
+</section>
+<section id="other-kinds-of-linked-lists" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Other kinds of linked lists</h1>
+<section id="doubly-linked-lists" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="doubly-linked-lists"><span class="header-section-number">5.1</span> Doubly linked lists</h2>
+<p>Yes it’s a thing. Every node has two links instead of the more traditional one link. One of the links points to the next node, and the other link points to the previous node. Every node (except the last) will contain the location of the next node, and every node (except the first) will contain the location of the previous node. This allows us to traverse the list forward or backward using <em>head, tail</em> and the links.</p>
+<p><img src="images/H1.svg" class="img-fluid" style="width:95.0%"></p>
+<p>With doubly linked lists, insertion and deletion typically require the modification of two nodes i.e.&nbsp;the preceding and proceeding nodes.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>class Node</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    int data;</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    Node next;</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    Node back;</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    // accessors, mutators, and constructor missing.</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="circular-linked-lists" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="circular-linked-lists"><span class="header-section-number">5.2</span> Circular linked lists</h2>
+<p>In this kind of linked list, the last node points to the first node. With circular linked lists, it is convenient to make first point to the last node of the list. That way, you have access to both the last and first (using <em>first.getLink()</em>) nodes with a single variable.</p>
+<p><img src="images/H2.svg" class="img-fluid" style="width:95.0%"></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

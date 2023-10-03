@@ -1,5 +1,5 @@
 ---
-title: "Chapter 0.2"
+title: "Behind the Scenes in Java"
 format:
    html:
     toc: true
@@ -9,7 +9,6 @@ format:
     code-block-bg: true
     code-block-border-left: true
 ---
-# Behind the Scenes in Java
 
 ## Memory
 If the discussion in this section is a bit too difficult for you to understand, please refer to the last Computer Architecture discussion we had in CSC132. Recall that during our discussion of how a computer works, we talked about the makeup of memory. At a very basic level, memory is made up of “words” which is a unit of memory. Each word has a specific address, and is used to store both data and the instructions that work upon that data. The diagram below shows a sample memory space with 256 words.

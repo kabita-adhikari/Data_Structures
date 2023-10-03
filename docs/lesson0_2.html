@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Java Preliminaries - Chapter 0.2</title>
+<title>Java Preliminaries - Behind the Scenes in Java</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,18 +108,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#behind-the-scenes-in-java" id="toc-behind-the-scenes-in-java" class="nav-link active" data-scroll-target="#behind-the-scenes-in-java"><span class="header-section-number">1</span> Behind the Scenes in Java</a>
+  <li><a href="#memory" id="toc-memory" class="nav-link active" data-scroll-target="#memory"><span class="header-section-number">1</span> Memory</a></li>
+  <li><a href="#storing-variables" id="toc-storing-variables" class="nav-link" data-scroll-target="#storing-variables"><span class="header-section-number">2</span> Storing variables</a></li>
+  <li><a href="#what-does-this-mean-for-our-programming" id="toc-what-does-this-mean-for-our-programming" class="nav-link" data-scroll-target="#what-does-this-mean-for-our-programming"><span class="header-section-number">3</span> What does this mean for our programming?</a>
   <ul class="collapse">
-  <li><a href="#memory" id="toc-memory" class="nav-link" data-scroll-target="#memory"><span class="header-section-number">1.1</span> Memory</a></li>
-  <li><a href="#storing-variables" id="toc-storing-variables" class="nav-link" data-scroll-target="#storing-variables"><span class="header-section-number">1.2</span> Storing variables</a></li>
-  <li><a href="#what-does-this-mean-for-our-programming" id="toc-what-does-this-mean-for-our-programming" class="nav-link" data-scroll-target="#what-does-this-mean-for-our-programming"><span class="header-section-number">1.3</span> What does this mean for our programming?</a>
-  <ul class="collapse">
-  <li><a href="#creating-objects" id="toc-creating-objects" class="nav-link" data-scroll-target="#creating-objects"><span class="header-section-number">1.3.1</span> Creating objects</a></li>
-  <li><a href="#assigning-objects" id="toc-assigning-objects" class="nav-link" data-scroll-target="#assigning-objects"><span class="header-section-number">1.3.2</span> Assigning objects</a></li>
-  <li><a href="#objects-as-parameters-to-functionsmethods" id="toc-objects-as-parameters-to-functionsmethods" class="nav-link" data-scroll-target="#objects-as-parameters-to-functionsmethods"><span class="header-section-number">1.3.3</span> Objects as parameters to functions/methods</a></li>
-  <li><a href="#arrays" id="toc-arrays" class="nav-link" data-scroll-target="#arrays"><span class="header-section-number">1.3.4</span> Arrays</a></li>
-  <li><a href="#arrays-of-objects" id="toc-arrays-of-objects" class="nav-link" data-scroll-target="#arrays-of-objects"><span class="header-section-number">1.3.5</span> Arrays of Objects</a></li>
-  </ul></li>
+  <li><a href="#creating-objects" id="toc-creating-objects" class="nav-link" data-scroll-target="#creating-objects"><span class="header-section-number">3.1</span> Creating objects</a></li>
+  <li><a href="#assigning-objects" id="toc-assigning-objects" class="nav-link" data-scroll-target="#assigning-objects"><span class="header-section-number">3.2</span> Assigning objects</a></li>
+  <li><a href="#objects-as-parameters-to-functionsmethods" id="toc-objects-as-parameters-to-functionsmethods" class="nav-link" data-scroll-target="#objects-as-parameters-to-functionsmethods"><span class="header-section-number">3.3</span> Objects as parameters to functions/methods</a></li>
+  <li><a href="#arrays" id="toc-arrays" class="nav-link" data-scroll-target="#arrays"><span class="header-section-number">3.4</span> Arrays</a></li>
+  <li><a href="#arrays-of-objects" id="toc-arrays-of-objects" class="nav-link" data-scroll-target="#arrays-of-objects"><span class="header-section-number">3.5</span> Arrays of Objects</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -129,7 +126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Chapter 0.2</h1>
+<h1 class="title">Behind the Scenes in Java</h1>
 </div>
 
 
@@ -144,16 +141,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="behind-the-scenes-in-java" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Behind the Scenes in Java</h1>
-<section id="memory" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="memory"><span class="header-section-number">1.1</span> Memory</h2>
+<section id="memory" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="memory"><span class="header-section-number">1</span> Memory</h2>
 <p>If the discussion in this section is a bit too difficult for you to understand, please refer to the last Computer Architecture discussion we had in CSC132. Recall that during our discussion of how a computer works, we talked about the makeup of memory. At a very basic level, memory is made up of “words” which is a unit of memory. Each word has a specific address, and is used to store both data and the instructions that work upon that data. The diagram below shows a sample memory space with 256 words.</p>
 <p><img src="images/one.svg" class="img-fluid" style="width:30.0%"> <br></p>
 <p><br></p>
 </section>
-<section id="storing-variables" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="storing-variables"><span class="header-section-number">1.2</span> Storing variables</h2>
+<section id="storing-variables" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="storing-variables"><span class="header-section-number">2</span> Storing variables</h2>
 <p>The operating system is in charge of mapping variables to addresses and the data stored in that address and there are two main ways that it does this.<br>
 With <b>direct addressing </b>, the location associated with the variable stores the value of that variable. This is typically the case with primitive data types e.g.&nbsp;characters, int, float, long, etc. The variable is said to be stored by value.<br>
 With <b>indirect addressing</b>, the location associated with the variable stores the address of another location that has the actual value. Think of it as the memory location is storing the keys of the actual place where the value is stored. This is typically the case with complex data types e.g.&nbsp;strings, objects created from classes, etc. The variable is said to be stored by reference.</p>
@@ -171,10 +166,10 @@ With <b>indirect addressing</b>, the location associated with the variable store
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>**spoiler alert: This arrow representation will come back later when we discuss linked lists.*/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="what-does-this-mean-for-our-programming" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="what-does-this-mean-for-our-programming"><span class="header-section-number">1.3</span> What does this mean for our programming?</h2>
-<section id="creating-objects" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="creating-objects"><span class="header-section-number">1.3.1</span> Creating objects</h3>
+<section id="what-does-this-mean-for-our-programming" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="what-does-this-mean-for-our-programming"><span class="header-section-number">3</span> What does this mean for our programming?</h2>
+<section id="creating-objects" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="creating-objects"><span class="header-section-number">3.1</span> Creating objects</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>// This is a basic class representing a circle All it stores is the radius. </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>// It has a constructor, an accessor and a mutator.</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>class Circle</span>
@@ -226,8 +221,8 @@ With <b>indirect addressing</b>, the location associated with the variable store
 <p><img src="images/5.svg" class="img-fluid" style="width:65.0%"></p>
 <p>Both a and b are objects and therefore are stored by reference while x and y which are primitive types are stored by value.</p>
 </section>
-<section id="assigning-objects" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="assigning-objects"><span class="header-section-number">1.3.2</span> Assigning objects</h3>
+<section id="assigning-objects" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="assigning-objects"><span class="header-section-number">3.2</span> Assigning objects</h3>
 <p>When a primitive type is assigned, the value stored in the location is copied to the new location.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x = y;      // This copies the value that was in y into x.</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>a = b;      // This copies the reference stored in b into a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -248,8 +243,8 @@ With <b>indirect addressing</b>, the location associated with the variable store
 <li>Secondly, and perhaps more importantly, since a and b refer to the exact same circle (there are two keys to the same house), then any changes made to the copy a (whether intentional or accidental) also affect the original b.</li>
 </ul>
 </section>
-<section id="objects-as-parameters-to-functionsmethods" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="objects-as-parameters-to-functionsmethods"><span class="header-section-number">1.3.3</span> Objects as parameters to functions/methods</h3>
+<section id="objects-as-parameters-to-functionsmethods" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="objects-as-parameters-to-functionsmethods"><span class="header-section-number">3.3</span> Objects as parameters to functions/methods</h3>
 <p>That last point we discussed might seem very small and avoidable but in reality it isn’t. That’s because whenever an object is passed as a parameter in a function, it is passed by reference. So even if it might have another variable name in the function, any changes to the object will affect the original object.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>class Test</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>{</span>
@@ -272,8 +267,8 @@ With <b>indirect addressing</b>, the location associated with the variable store
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="arrays" class="level3" data-number="1.3.4">
-<h3 data-number="1.3.4" class="anchored" data-anchor-id="arrays"><span class="header-section-number">1.3.4</span> Arrays</h3>
+<section id="arrays" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="arrays"><span class="header-section-number">3.4</span> Arrays</h3>
 <p>We have mentioned how primitive types are stored and passed (i.e.&nbsp;by value) and how objects are stored and passed (i.e.&nbsp;by reference). But what about arrays? Recall that with primitive types, the variable name is mapped directly to a memory location that contains the value associated with that variable (by value). Conversely, with objects, the variable name is mapped to a memory location that contains the address of another place in memory where the object state is being stored (by reference). Arrays (of any type) are treated like objects. That means that the array name is mapped to a memory location that contains the address of the first of a block of memory locations that contain the array elements i.e.&nbsp;arrays are passed by reference. This means that if you pass an array as an argument to a function, that function is in fact dealing with the original array and therefore any changes to the array will last even after control has been passed back to the original function.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>import java.util.*</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>class Trial</span>
@@ -300,8 +295,8 @@ With <b>indirect addressing</b>, the location associated with the variable store
 <span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notice in the example above how the selectionSort function doesn’t have a return type but is still able to affect a variable in the original main function.</p>
 </section>
-<section id="arrays-of-objects" class="level3" data-number="1.3.5">
-<h3 data-number="1.3.5" class="anchored" data-anchor-id="arrays-of-objects"><span class="header-section-number">1.3.5</span> Arrays of Objects</h3>
+<section id="arrays-of-objects" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="arrays-of-objects"><span class="header-section-number">3.5</span> Arrays of Objects</h3>
 <p>Occasionally, it is necessary to create an array of objects. If objects are mapped by reference, and arrays are mapped by reference, then what about arrays of objects?</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>int [] arr = new int [10]; // an array of primitives (for comparison)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Circle [] circles = new Circle [10];  // an array of circle objects which by default are all set</span>
@@ -318,7 +313,6 @@ With <b>indirect addressing</b>, the location associated with the variable store
 Object Oriented Data Structures using Java (4th Edition). Nell Dale, Daniel T. Joyce, Chip Weems.</p>
 
 
-</section>
 </section>
 </section>
 
