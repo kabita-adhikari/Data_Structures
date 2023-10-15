@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="12cm" height="8cm" viewBox="247 174 222 145" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="329.987" y="175.748" width="69" height="49"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" x="329.987" y="175.748" width="69" height="49"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="399.184" y="175.803" width="69" height="49"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" x="399.184" y="175.803" width="69" height="49"/>
+  </g>
+  <text font-size="16.9331" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="359.707" y="203.77">
+    <tspan x="359.707" y="203.77">D</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="362.985" y="199.772">
+    <tspan x="362.985" y="199.772"></tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" x1="329.987" y1="224.748" x2="274.138" y2="290.433"/>
+    <polygon style="fill: #3c3d3d" points="270.329,287.195 267.661,298.052 277.948,293.672 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" points="270.329,287.195 267.661,298.052 277.948,293.672 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" x1="399.714" y1="225.684" x2="400.26" y2="289.198"/>
+    <polygon style="fill: #3c3d3d" points="395.26,289.241 400.346,299.198 405.26,289.155 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" points="395.26,289.241 400.346,299.198 405.26,289.155 "/>
+  </g>
+  <text font-size="16.9331" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="247.635" y="314.501">
+    <tspan x="247.635" y="314.501">_&lt;D</tspan>
+  </text>
+  <text font-size="16.9331" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="368.426" y="313.687">
+    <tspan x="368.426" y="313.687">D&lt;_</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="258.247" y="313.117">
+    <tspan x="258.247" y="313.117"></tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="406.814" y="314.04">
+    <tspan x="406.814" y="314.04"></tspan>
+  </text>
+</svg>

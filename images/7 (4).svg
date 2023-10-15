@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="12cm" height="8cm" viewBox="328 174 221 144" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="329.987" y="175.748" width="69" height="49"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" x="329.987" y="175.748" width="69" height="49"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="399.184" y="175.803" width="69" height="49"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" x="399.184" y="175.803" width="69" height="49"/>
+  </g>
+  <text font-size="16.9331" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="429.35" y="204.73">
+    <tspan x="429.35" y="204.73">S</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" x1="399.714" y1="225.684" x2="400.26" y2="289.198"/>
+    <polygon style="fill: #3c3d3d" points="395.26,289.241 400.346,299.198 405.26,289.155 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" points="395.26,289.241 400.346,299.198 405.26,289.155 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" x1="468.184" y1="224.803" x2="515.784" y2="291.697"/>
+    <polygon style="fill: #3c3d3d" points="511.71,294.596 521.582,299.844 519.858,288.798 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #3c3d3d" points="511.71,294.596 521.582,299.844 519.858,288.798 "/>
+  </g>
+  <text font-size="16.9331" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="368.426" y="313.687">
+    <tspan x="368.426" y="313.687">_&lt;S</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="258.247" y="313.117">
+    <tspan x="258.247" y="313.117"></tspan>
+  </text>
+  <text font-size="16.9331" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="515.979" y="313.272">
+    <tspan x="515.979" y="313.272">_&gt;S</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #3c3d3d;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="374.517" y="311.733">
+    <tspan x="374.517" y="311.733"></tspan>
+  </text>
+</svg>

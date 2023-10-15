@@ -1,0 +1,258 @@
+---
+title: " Advanced Sorting"
+format:
+   html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    code-block-bg: true
+    code-block-border-left: true
+---
+We covered a few sorting algorithms in Chapter 2 i.e. bubble sort, selection sort, and insertion sort. Each of them required $n-1$ passes and had a complexity of $O(n^2)$. Bubble sort is useful for small amounts of data, selection sort is useful for small amounts of data when swapping is time consuming (since it minimizes swaps), and insertion sort was most useful when the list is almost sorted (since it minimizes comparisons).
+
+We are now going to discuss a few more sorting algorithms that, while more complicated to understand and code, have better performance particularly in larger arrays.
+
+
+::: {.callout}
+Remember that all these sorting algorithms are designed to sort ”things” and we are just using numbers (integers) for simplicity. The same rationale in the sorting algorithms can be used for any other data type (basic, complex, or abstract) as long as you identify what >, <, and == mean.
+:::
+
+# Shell sort
+Shell sort is based on insertion sort. Recall that insertion sort is the sort we would typically use if we wanted to arrange a hand of cards (We move one card at a time into its proper position in the sorted portion of the hand). Shell sort is highly efficient and attempts to avoid large shifts as would be the case in insertion sort ifa small value is towards the right of an array. As a result, it is good for reverse ordered data.
+
+So how does it work? Well it attempts to sort sublists made up of items a given distance apart, then gradually reducing that distance. Starting with a large distance allows some of the items to make large leaps towards their final positions. The sublists are sorted using insertion sort.
+
+More formally, we pick a value k, and perform insertion sort for every k-th element in the array. We then shift by one position to the right, and perform the same insertion sort. You keep on shifting and sorting till you reach a position that is a multiple of k. That's just one pass.
+
+We then reduce the value of k and repeat the process. The last pass happens when k=1 and is just the normal insertion sort (for a total of k passes).
+
+The actual complexity of the algorithm is an open issue partly because it depends on what values of k we select. However, k should be prime for the best results. In the example below, we start with k=3.
+
+![](images/table.svg){ width=500px }
+
+::: {.callout}
+In a test, you would only have to show the last step of each pass i.e. the lines in bold.
+:::
+
+# Heap sort
+Another sorting algorithm is heap sort, which as the name suggests depends on a heap (particularly its array representation).
+
+We start by creating a heap out of the provided data. In this form, it isn't sorted but we are sure what the largest value is (because it is at the root). We then delete the root and swap it with the last element in the array. This ensures that the largest value is in the last position of the array and we don't have to mess with it again. We then go through the max-heapify (or re-heaping) process to move the new root to it proper position. After this is done, we repeat the process of deleting the root and swapping it with the last position, while using the reduced heap (i.e. indices 1 to n-1).
+
+| Consider the input data
+
+| 13, 9, 5, 7, 12, 2, 3, 14, 6, 1.
+
+In chapter 7, we saw how to insert and create a heap. The data above will producethe heap below. See if you can produce it on your own.
+
+![](images\8 (1).svg){fig-align="center" width=500px }
+
+which has the array representation
+
+|                    14, 13, 5, 12, 9, 2, 3, 7, 6, 1 
+
+We know that 14 (the root) is the largest so we delete it, swap it with the value in the last position, and now consider the extreme right of the array sorted.
+
+![](images/8 (2).svg){fig-align="center" width=500px }
+
+
+Notice that our root is wrong, so we have to max-heapify the remaining heap which yields:
+
+![](images/8 (3).svg){fig-align="center" width=500px}
+
+which has the array representation below (the sorted part is underlined):
+
+|                    13, 12, 5, 7, 9, 2, 3, 1, 6, <u> 14 </u>
+
+We repeat the process of deletion, swapping, and max-heapifying to get:
+
+![](images/8 (4).svg){fig-align="center" width=500px}
+
+which is represented as:
+
+|                     12, 9, 5, 7, 6, 2, 3, 1, <u>13, 14</u>
+
+The process is repeated with an ever decreasing heap to yield the steps shown below.
+
+|                  9, 7, 5, 1, 6, 2, 3, <u>12, 13, 14</u>
+
+|                  7, 6, 5, 1, 3, 2, <u>9, 12, 13, 14</u>
+
+|                  6, 3, 5, 1, 2,<u> 7, 9, 12, 13, 14</u>
+
+|                  5, 3, 2, 1,<u> 6, 7, 9, 12, 13, 14</u>
+
+|                  3, 1, 2,<u> 5, 6, 7, 9, 12, 13, 14</u>
+
+|                  2, 1,<u> 3, 5, 6, 7, 9, 12, 13, 14</u>
+
+|                  <u>1, 2, 3, 5, 6, 7, 9, 12, 13, 14</u>
+
+
+::: {.callout}
+in a quiz, you will only have to give the final array representations of each step as shown above. However, drawing the heaps will inevitably help you figure out what the array looks like after each max-heapify process.
+:::
+
+The complexity of heap sort is $O(n lg n)$.
+
+# Quick sort
+The last advanced sort we shall look at is quick sort which has a complexity of $O(n lg n)$ on average. The basic idea behind quick sort is to get all the small numbers to one side, and large numbers to another side of a “pivot”.
+
+We start by picking a pivot number (we can use the first item for simplicity). We shall then use two “cursors” to start searching from the immediate right of the pivot , and extreme right of the array in order to identify a value larger than, and less than our pivot respectively. We then swap those two values and the cursors pick up where they left off. The cursors eventually cross paths (i.e. get to the same position) and we now swap the pivot with the value immediately to their left. The pivot value is now in its correct position in the array, all values less than it are to its left, and all values greater than it are to its right.
+
+We then repeat the process with the sub-arrays to the pivots right and left. As you may have realized, it is a recursive process.
+
+We'll look at an example to better understand this process.
+
+We start with an unsorted list
+
+![](images/8 (5).svg){fig-align="center" width=500px}
+
+We pick 13 as our pivot.
+
+![](images/8 (6).svg){fig-align="center" width=500px}
+
+We use our left cursor, and start at the position to to the right of the pivot (9) looking for a value larger than our pivot (13). I am calling it left because it starts on the left side of the array. Moving from left to right, the first value we find larger than 13 is 14.
+
+![](images/8 (7).svg){fig-align="center" width=500px}
+
+We then use our right cursor, starting at the end of the array, and look for a value less than our pivot. We find such a value (1) in the first position we search.
+
+![](images/8 (8).svg){fig-align="center" width=500px}
+
+We then swap those values
+
+![](images/8 (9).svg){fig-align="center" width=500px}
+
+We resume our search for smaller values using our left cursor, but fail to find any and the left cursor gets to the same position as the right.
+
+![](images/8 (10).svg){fig-align="center" width=500px}
+
+
+We now swap the pivot with the value immediately to the left of this position.
+
+![](images/8 (11).svg){fig-align="center" width=500px}
+
+
+Notice that the pivot value is now in its final position (and so we don't need to deal with it any more), all values to its left are smaller than it, and all values to its right are larger than it.
+
+We now repeat the process with the left and right sub-arrays. Since the right sub-array is just a singleton, it is trivially sorted and is therefore in its final position too.
+
+
+![](images/8 (12).svg){fig-align="center" width=500px}
+
+For the left sub-array, we move the left cursor starting from 9 looking for a value larger than our pivot. We find such a number in the first place we look.
+
+![](images/8 (13).svg){fig-align="center" width=500px}
+
+We move our right cursor from 1 looking for a value less than our pivot. We also find such a number in the first position we look at.
+
+![](images/8 (14).svg){fig-align="center" width=500px}
+
+We then swap those two values.
+
+![](images/8 (15).svg){fig-align="center" width=500px}
+
+We move L till the next “larger than pivot” value, and R till the next “smaller than pivot” value.
+
+![](images/8 (16).svg){fig-align="center" width=500px}
+
+And swap those values.
+
+![](images/8 (17).svg){fig-align="center" width=500px}
+
+
+We move L and R again.
+
+![](images/8 (18).svg){fig-align="center" width=500px}
+
+And swap.
+
+![](images/8 (19).svg){fig-align="center" width=500px}
+
+We move L and it gets to the same position as R.
+
+![](images/8 (20).svg){fig-align="center" width=500px}
+
+Which means we need to move our pivot to the position to the immediate left of our cursors and that is its final position.
+
+![](images/8 (21).svg){fig-align="center" width=500px}
+
+
+Let's now consider the sublist (2, 1, 5, 3). As usual we begin by selecting a pivot (2).
+
+![](images/8 (22).svg){fig-align="center" width=500px}
+
+We then move our left and right cursors until we identify values larger than and less than the pivot respectively. However, while the left cursor finds a value (5) larger than 2, the right cursor is not able to find one before it gets to the same position as the left.
+
+![](images/8 (23).svg){fig-align="center" width=500px}
+
+Since they are in the same place, we now need to move our pivot to its proper position i.e. to their immediate left.
+
+![](images/8 (24).svg){fig-align="center" width=500px}
+
+To the left of 2, is a singleton which is trivially sorted (i.e. since its just a single value, it is already sorted).
+
+![](images/8 (25).svg){fig-align="center" width=500px}
+
+To the right of 2 is a 2-value sub-array that also needs to be sorted. We pick a pivot:
+
+![](images/8 (26).svg){fig-align="center" width=500px}
+
+and move our left cursor looking for values larger than the pivot. The left cursor goes out of bounds (which means that there is no value larger than 5) 
+
+![](images/8 (27).svg){fig-align="center" width=500px}
+
+
+so 5 is swapped with the last value in that sublist, and is now in its final position.
+
+![](images/8 (28).svg){fig-align="center" width=500px}
+
+3 is a single value so its trivially sorted.
+
+![](images/8 (29).svg){fig-align="center" width=500px}
+
+We begin to deal with the sub-array to the right of 6 by selecting a pivot.
+
+![](images/8 (30).svg){fig-align="center" width=500px}
+
+We then move L looking for a value larger than 12 we find that the cursor goes out of bounds.
+
+![](images/8 (31).svg){fig-align="center" width=500px}
+
+Which means 12 is the largest in that sub-array, so we move it to the proper position by swapping.
+
+![](images/8 (32).svg){fig-align="center" width=500px}
+
+We now have to sort the sub-array with values 9 and 7. We start by picking a pivot.
+
+![](images/8 (33).svg){fig-align="center" width=500px}
+
+We move L looking for a value larger and go out of bounds.
+
+![](images/8 (34).svg){fig-align="center" width=500px}
+
+And swap 9 into its proper position.
+
+![](images/8 (35).svg){fig-align="center" width=500px}
+
+
+And our remaining sub-array consists of a single item so that item is trivially sorted.
+
+![](images/8 (36).svg){fig-align="center" width=500px}
+
+Phew...that was intense.
+
+
+::: {.callout}
+Quick sort is actually used a lot because of its speed – $O(n lg n)$. However, the choice of your pivot value has a big impact on how close to that performance the quick sort algorithm actually gets. If the pivot value is either the lowest or highest value, then its performance is closer to $0(n^2)$. If the pivot value is close to the middle, then the algorithm takes full advantage of its divide and conquer nature ergo $O(n lg n)$.
+:::
+
+
+Now that you know how to use quick sort, see if you can follow through the algorithm with the values below. I have provided intermediate snapshots of the values and the pivots that I used. The values that are in their final positions are underlined.
+
+
+![](images/table1.svg){ width=500px}
+
+
+

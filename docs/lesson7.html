@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Java Preliminaries - Other trees</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#general-trees" id="toc-general-trees" class="nav-link active" data-scroll-target="#general-trees"><span class="header-section-number">1</span> General trees</a></li>
+  <li><a href="#trees" id="toc-trees" class="nav-link" data-scroll-target="#trees"><span class="header-section-number">2</span> 2-3 trees</a>
+  <ul class="collapse">
+  <li><a href="#so-what-is-a-2-3-tree" id="toc-so-what-is-a-2-3-tree" class="nav-link" data-scroll-target="#so-what-is-a-2-3-tree"><span class="header-section-number">2.1</span> So what is a 2-3 tree?</a></li>
+  <li><a href="#insertions" id="toc-insertions" class="nav-link" data-scroll-target="#insertions"><span class="header-section-number">2.2</span> Insertions!</a></li>
+  </ul></li>
+  <li><a href="#heaps" id="toc-heaps" class="nav-link" data-scroll-target="#heaps"><span class="header-section-number">3</span> Heaps</a>
+  <ul class="collapse">
+  <li><a href="#representation" id="toc-representation" class="nav-link" data-scroll-target="#representation"><span class="header-section-number">3.1</span> Representation</a></li>
+  <li><a href="#finding-max-node" id="toc-finding-max-node" class="nav-link" data-scroll-target="#finding-max-node"><span class="header-section-number">3.2</span> Finding max node</a></li>
+  <li><a href="#insertion" id="toc-insertion" class="nav-link" data-scroll-target="#insertion"><span class="header-section-number">3.3</span> Insertion</a></li>
+  <li><a href="#deletion" id="toc-deletion" class="nav-link" data-scroll-target="#deletion"><span class="header-section-number">3.4</span> Deletion</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Other trees</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="general-trees" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> General trees</h1>
+<p>In general, trees consist of nodes and branches without any restrictions to the number of children that each parent is allowed to have.</p>
+<p>There are cases in which we will have to convert an arbitrary tree into a binary tree and there are some rules that can help us come up with a standard binary tree representation of an arbitrary tree.</p>
+<p>These rules are simple</p>
+<ul>
+<li>root stays the same</li>
+<li>left-most child remains as the left child</li>
+<li>remaining children are cascaded as the right children of the left child</li>
+</ul>
+<p>Using the rules above we can convert this tree:</p>
+<p><img src="images/7 (2).png" class="img-fluid" data-ig-align="center" width="500"></p>
+<p>into this:</p>
+<p><img src="images/7 (2).png" class="img-fluid" data-ig-align="center" width="500"></p>
+</section>
+<section id="trees" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 2-3 trees</h1>
+<p>So you might have noticed a couple of things about binary search trees in the last chapter, both of which have to do with the binary search tree’s apparent quick searching <span class="math inline">\((log_2n)\)</span>. First, the search time is only as low as <span class="math inline">\(O(log_2n)\)</span> if the binary search tree is balanced. If our tree turns out to be very one sided, then our search time is closer to <span class="math inline">\(O(n)\)</span> than it is to O(log_2n). Secondly, if the search time is O(log2n),then maybe we can improve it to <span class="math inline">\(O(log_3n)\)</span> just by increasing the number of children that a node in the tree is allowed to have…who knows…Maybe even improve it even further than that.</p>
+<p>Well there is a data structure that allows that: <strong>2-3 trees</strong> i.e.&nbsp;it allows for a balanced tree where each node is allowed up to three children and improves search time from binary search trees. It turns out that the more perfect you want your life to be i.e.&nbsp;more balanced, with quicker searches, then the more complicated it gets. As a result, we are just going to discuss this data structure at a high level and see how its insertions work out and leave it at that…for now. (<em>dundun-duuuun!!!</em>)</p>
+<section id="so-what-is-a-2-3-tree" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="so-what-is-a-2-3-tree"><span class="header-section-number">2.1</span> So what is a 2-3 tree?</h2>
+<p>So far we’ve said that a 2-3 tree is a balanced tree where each node has up to three children. Well there are a few more rules.</p>
+<p>With a binary tree, we have two children per node, and we only have to make one comparison (and decision) in order to determine which subtree to traverse to. Wellif we’re going to have three subtrees, then we need two comparisons, which in turn means that we need two pieces of data.</p>
+<p>A node of a 2-3 tree holds up to 2 pieces of data, and its three children represent values less than, in between, and greater than those values.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="images\7 (2).svg" class="img-fluid" width="500"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="images/7 (3).svg" class="img-fluid" width="500"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="images/7 (4).svg" class="img-fluid" width="500"></p>
+</div>
+</div>
+</div>
+<p>Insertions are always done at the leaves, all leaves are at the same level (hence the balanced part), and all data is stored in sorted order within the nodes.</p>
+</section>
+<section id="insertions" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="insertions"><span class="header-section-number">2.2</span> Insertions!</h2>
+<p>So here are a few rules to remember.</p>
+<ul>
+<li>At the end of the insertion, you should still have a valid 2-3 tree i.e.&nbsp;all leaves at the bottom (or top…depending on how you look at it) of the tree, maximum of two pieces of information in each node, maximum of three subtrees in their proper positions.</li>
+<li>If there is space in an appropriate leaf node (i.e.&nbsp;it only has 1 piece of data) then just insert it there (smaller value on the left).</li>
+<li>If you have one piece of information in the node, then you can only have 2 subtrees, and if you have 2 pieces of information, then you can have 3 subtrees.</li>
+<li>If you are forced to temporarily push a third piece of data into a node, that node splits up into two nodes with the two extreme values in them, and the middle value is promoted to the parent node.</li>
+</ul>
+<p>Let’s try inserting the sequence <em>1, 2, 3, 4, 5, 6, 7, 8, 9, 10</em>.</p>
+<p>Let’s try another sequence to drive this point home. <em>8, 12,3, 5, 9, 15, 17, 7</em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\7 (3).png" class="img-fluid figure-img" width="600"></p>
+</figure>
+</div>
+<p>Let’s try another sequence to drive this point home. <em>8, 12,3, 5, 9, 15, 17, 7</em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\7 (4).png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<p>An online tool to visualize the insertions can be found at https://goo.gl/LrNhwJ <a href="https://goo.gl/LrNhw" class="external" target="_blank">https://goo.gl/LrNhw</a></p>
+</section>
+</section>
+<section id="heaps" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Heaps</h1>
+<p>Heaps are another kind of tree in which the keys of the nodes matter. In a max heap, the key of a node is either greater than or equal to the keys of its children. Heaps can also be binary (binary heaps) and it is this kind that we are going to be discussing.</p>
+<p>A natural consequence of the key arrangement in a max heap is that the node with the largest key (or the maximum value) is always the root.</p>
+<p>Another feature of a heap is that it is always balanced. This means that the leaves are always at the bottom two levels. Additionally, insertion occurs from left to right at the leaves.</p>
+<p>Below is an example of a max heap. You’ll notice two properties (that we’ve already alluded to).</p>
+<ul>
+<li>Every non leaf has exactly two children (hence the balanced shape). There are cases where you will have only one node on the bottom level having one child.</li>
+<li>Every node has a value at least as large as its children</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (5).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<p>Another difference from the binary search tree is that there is no order between siblings i.e.&nbsp;right child is not necessarily larger than the left child. Sometimes a larger node will be on a lower level than a smaller node. This can happen if the larger node is not a direct descendant of the smaller node.</p>
+<p>A consequence of all these properties is that every node is the root of its own sub-heap.</p>
+<section id="representation" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="representation"><span class="header-section-number">3.1</span> Representation</h2>
+<p>It should be obvious that a heap can be represented using the data and two link Node class that we used for binary trees. However, the shape of a heap is so regular that it can also be represented as an array. By regular, we mean that every 5 node heap will have the same shape, every 10 node heap will have the same shape, and so on and so forth.</p>
+<p>The array below is a representation of the heap above.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (10).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<p>If the array begins at index <span class="math inline">\(1\)</span>, then a node is at position <span class="math inline">\(n\)</span>, and its children are at <span class="math inline">\(2n\)</span> (left) and <span class="math inline">\(2n+1\)</span> (right).</p>
+<p>The parents of any node are at <span class="math inline">\(n/2\)</span> (with the remainder discarded).</p>
+</section>
+<section id="finding-max-node" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="finding-max-node"><span class="header-section-number">3.2</span> Finding max node</h2>
+<p>This is the easiest operation in a max heap. The maximum element is in the root. <span class="math inline">\(O(1).\)</span></p>
+</section>
+<section id="insertion" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="insertion"><span class="header-section-number">3.3</span> Insertion</h2>
+<p>This is also another relatively easy operation. All insertions happen at the lowest level from left to right. The inserted node then “sifts up” the tree by swapping it with its parent if the parent is less than this new node.</p>
+<p>Consider the tree above. Suppose we wanted to insert an 8 to the heap above. Its simply a matter of including it in the next leaf position. After comparing it with its new parent, we decide whether to promote it to parent (and swap it with that parent). 8 is less than 75 so no swaps are necessary and insertion is complete.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (6).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (1).svg" class="img-fluid figure-img" width="19"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (7).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<p>That was an easy insertion. What about if we wanted to insert 80 into the heap above?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (8).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (1).svg" class="img-fluid figure-img" width="20"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (9).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="callout callout-style-simple callout-none no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Let’s see if you can come up with the heap after inserting the following values in the order in which they are given.</p>
+<p>&nbsp;&nbsp;1, 3, 5, 7, 9, 8, 6, 4, 2</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\Activity1.png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="deletion" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="deletion"><span class="header-section-number">3.4</span> Deletion</h2>
+<p>One of the main reasons for using a max heap is that it allows us to keep track of the maximum element very easily. In fact, max heaps are normally used to implement priority queues. That way, the item with the highest priority will always be at the root. Anyway, as a result, the most common deletion that a max heap goes through is deleting the root.</p>
+<p>Before we discuss deleting a root, let’s just delete the last leaf of the heap.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (11).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (1).svg" class="img-fluid figure-img" width="20"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (12).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<p>Deleting the last leaf is just a matter of removing it. (or the link to it). You’ll notice that the heap still retains all the properties that make it a heap when this happensand therefore we can say we’ve successfully deleted that node.</p>
+<p>So what about deleting the root? Well we start by swapping the root with the last leaf, then deleting that last leaf (which we’ve just seen is a very easy process).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (13).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (1).svg" class="img-fluid figure-img" width="20"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (14).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<p>Notice that other than our new root, the left and right sub-heaps are still valid heaps.</p>
+<p>The next part is a process that is referred to as <strong>max-heapify</strong> (yes…computer scientists sometimes run out of names) or re-heap in which we’ll move 8 (the out of place root) down to its proper position. This involves comparing that node to its two children and swapping it with the larger child until it gets to a position where it is larger than its children.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (15).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (1).svg" class="img-fluid figure-img" width="20"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (16).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (1).svg" class="img-fluid figure-img" width="20"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (17).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (1).svg" class="img-fluid figure-img" width="20"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/7 (18).svg" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="callout callout-style-simple callout-none no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Now let’s see if you can delete the 9 from the heap you created in the last activity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\Activity2.png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

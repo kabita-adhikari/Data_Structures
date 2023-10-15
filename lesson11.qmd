@@ -1,0 +1,36 @@
+---
+title: "When to use what"
+format:
+   html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    code-block-bg: true
+    code-block-border-left: true
+---
+
+Ok...so we've discussed a whole bunch of stuff over the course of the quarter...a lot of data structures. How do we know when you use what?
+
+![](images/flowchart.svg){ width=500px }
+
+There are lots of ways to rank, and therefore select data structures.
+In terms of speed:
+
+- slow:         arrays, linked lists
+- fairly fast:  trees
+- very fast:    hash tables
+
+Unfortunately, the faster structures are typically the more difficult to program, and many require you to know something about how much data you will be storing. Others don't use memory very efficiently.
+
+Given that CPU power keeps on increasing, the easier to program, and slower structures are getting faster and therefore more utilized. But it helps to know how to use all of them so that you can select the appropriate one for the problem that you're facing.
+
+![](images/table11a.svg){ width=500px }
+
+We can also compare the structures in terms of their usefulness.
+
+![](images/table11b.svg){ width=500px }
+
+
+
+We've also covered some special purpose structures such as stacks and queues, which are used to aid some specific algorithms. These abstract data types are implemented using the more fundamental data structures such as linked lists and arrays. (as you learned during your 
+programming assignments)

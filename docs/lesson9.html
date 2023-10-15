@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Java Preliminaries - Introduction to Hash Tables</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#what-is-a-hash-table" id="toc-what-is-a-hash-table" class="nav-link active" data-scroll-target="#what-is-a-hash-table"><span class="header-section-number">0.1</span> What is a hash table?</a></li>
+  <li><a href="#so-how-does-any-key-get-mapped-to-an-index" id="toc-so-how-does-any-key-get-mapped-to-an-index" class="nav-link" data-scroll-target="#so-how-does-any-key-get-mapped-to-an-index"><span class="header-section-number">0.2</span> So how does any key get mapped to an index?</a></li>
+  <li><a href="#collisions" id="toc-collisions" class="nav-link" data-scroll-target="#collisions"><span class="header-section-number">1</span> Collisions</a>
+  <ul class="collapse">
+  <li><a href="#open-addressing" id="toc-open-addressing" class="nav-link" data-scroll-target="#open-addressing"><span class="header-section-number">1.1</span> Open addressing</a></li>
+  <li><a href="#separate-chaining" id="toc-separate-chaining" class="nav-link" data-scroll-target="#separate-chaining"><span class="header-section-number">1.2</span> Separate chaining</a></li>
+  <li><a href="#hash-functions" id="toc-hash-functions" class="nav-link" data-scroll-target="#hash-functions"><span class="header-section-number">1.3</span> Hash functions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to Hash Tables</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Hash tables are another data structure that we shall briefly discuss which are used for storing large amounts of data in an effective manner. They are a hybrid between arrays and linked lists, and as such inherit the advantages and disadvantages of both. Before we discuss these advantages and disadvantages, we shall try to understand what hash tables are and how they work.</p>
+<section id="what-is-a-hash-table" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="what-is-a-hash-table"><span class="header-section-number">0.1</span> What is a hash table?</h2>
+<p>A hash table is a data structure designed to store key value pairs i.e.&nbsp;it has both a key and a value.. Recall how arrays work: a value is stored at a specfic index. The index is always a positive integer, and as a result of the index, it is very quick and straight forward to access the value if you know its index. A hash table is similar because it is a kind of associative array. Instead of having positive integersto identify where a value is stored, hash tables use the key to identify where the value is stored. This means that you can use anything (integer, string, another data type) to identify where the value is stored.</p>
+<p>Because it is based on an array, it offers very fast insertions and searching (almost O(1)). This means it is significantly faster than trees, and relatively easy to program. However, on the down side, it means that for best performance, we need to have a good idea of how many items we’ll store, and they are difficult to expand once created.</p>
+</section>
+<section id="so-how-does-any-key-get-mapped-to-an-index" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="so-how-does-any-key-get-mapped-to-an-index"><span class="header-section-number">0.2</span> So how does any key get mapped to an index?</h2>
+<p>We’ve said that in the background, a hash table is basically an array with indices. We’ve also said that on the outside, a hash table uses a key to decide which specific location we are dealing with. How? <strong>Hash functions</strong>. A hash function is a function that is used to convert a key to a valid index value.</p>
+<p><img src="images/9.svg" class="img-fluid" width="500"></p>
+<p>For example, if we were using strings as the key, a very basic hash function would be to add numeric values associated with each character.</p>
+<p>This simple hash function H can be represented mathematically by the equation</p>
+<p><span class="math display">\[ H (Key) = \sum_{c∈Key} f(c) \]</span> <span class="math inline">\(where f(A) = 1, f(B) = 2, f(C) = 3 … f(Z) = 26\)</span></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>hash(CATS) == 43</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    //given C=3, A=1, T=20, S=19</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    // therefore CATS = (3+1+20+19) = 43</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So we would store whatever value was associated with CATS at the 43rd index.Similarly</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hash(DOGS) == 45</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    //given D=4, O=15, G=7, S=19</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    // DOGS = (4+15+7+19) = 45</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    //settling once and for all that dogs are better than cats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now one of the reasons this hash function is basic because it allows for an infinite number of indices which we know is not true. If we were just adding the characters of the string in the key, we could get anything from A (which is at index1) to a really large number (think of the longest word – which incidentally has 189,819 letters). This would not work if we had an array with only 1000 positions.</p>
+<p>We can solve this issue by restricting its output to the range by doing something like this <span class="math display">\[index = sumOfCharacterValues  \%  range \]</span> or more specifically <span class="math display">\[index = 43 \% 1000\]</span></p>
+<p>This essentially hashes any string to a value within our range. Remember you can have any kind of hash function you want as long as it produces a valid index as its output.</p>
+</section>
+<section id="collisions" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Collisions</h1>
+<p>In a perfect world, the hash function would map a unique key to a unique position.Unfortunately, this is rarely the case. There are cases where two different keys will produce the same index when passed through the hash function. This condition is called a <strong>collision</strong>.</p>
+<p>For example, in our hash function from above, the index for SCAT would also be 43. That means that any value associated with SCAT and CATS would potentially be stored in the same location which is not what we want.</p>
+<p>There are a couple of ways that we can deal with collisions.</p>
+<section id="open-addressing" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="open-addressing"><span class="header-section-number">1.1</span> Open addressing</h2>
+<p>In the event that you have a collision, open addressing searches the array in a systematic way for an empty cell and then puts that value in the cell. Of course his is just a quick fix with its associated issues.</p>
+<p>One way of implementing open addressing is by <strong>linear probing</strong> where one searches sequentially for the next vacant cell.</p>
+<p><img src="images/9.png" class="img-fluid" width="500"></p>
+<p>One of the disadvantages of this approach is clustering. If there is a common index, then cells next to that index get full really quickly and the data isn’t balanced but clustered. Additionally, as the array gets full, the “clusters” get larger and result in long probe lengths.</p>
+<p>Another way of implementing open addressing is by using <strong>quadratic probing</strong>. This is similar to linear probing except that the step sizes that the system takes to find the next vacant cell grow larger. This reduces the clustering problems associated with linear probing.</p>
+<p>For example, if we probed some cell x, with linear probing, the next cells we would probe would be <span class="math inline">\(x+1, x+2, x+3,....\)</span></p>
+<p>With quadratic probing, the next cells we would probe would be <span class="math inline">\(x+1, x+4, x+9,...\)</span></p>
+</section>
+<section id="separate-chaining" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="separate-chaining"><span class="header-section-number">1.2</span> Separate chaining</h2>
+<p>Another way to deal with collisions is by combining arrays and linked lists. Each cell doesn’t just contain a value but rather a linked list that could contain any number of values (depending on how many collisions occur). This affects the complexity of insertion as it changes from <span class="math inline">\(O(1)\)</span> to <span class="math inline">\(O(m)\)</span> where m is the average number of items in each list.</p>
+</section>
+<section id="hash-functions" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="hash-functions"><span class="header-section-number">1.3</span> Hash functions</h2>
+<p>To conclude this introduction, we shall discuss the hash function. A hash function should be simple, and quick to calculate/compute. Remember that this function is used for every insertion and therefore it has a huge impact on the actual speed of use of the hash table.</p>
+<p>As mentioned before, a perfect hash function would map each key to a unique table location. However, since we don’t live in a perfect world, we’ll settle for a hash function that has a low number of collisions.</p>
+<p>See if you can populate the hashtable below with the given keys assuming linear probing with an interval of 1, 3, and quadratic probing.</p>
+<p>The hash function h is given by <span class="math display">\[h(K)=K \% 10\]</span> Where K is an integer key.</p>
+<p>The keys being inserted are <span class="math inline">\(12, 35, 667, 900, 13474, 75, 82, 95, 102.\)</span></p>
+<p><img src="images\table9 (2).png" class="img-fluid" width="600"></p>
+<p>Another cool hash function is the <strong>mid-square method</strong> which calculates the key using the middle r digits of the square of the key. For a hash table of 10 elements, r would be 1. For a table of 100 elements, r would be 2, etc.</p>
+<p>E.g. if the key was 667 and r was 2, then <span class="math inline">\(667^2= 444889\)</span> and the middle 2 digits (and therefore the index) are 48.</p>
+<p>Alternatively if the key is 12 and r was 2, then <span class="math inline">\(12^2= 144\)</span> and the middle 2 digits (skewed to the left) are 14.</p>
+<p>Given r = 1, and a hashtable of 10 elements, with the same input keys, fill out the table below.</p>
+<p><img src="images\table9 (1).png" class="img-fluid" width="600"></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
