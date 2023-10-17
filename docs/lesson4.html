@@ -184,8 +184,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1.2" class="anchored" data-anchor-id="stack-uses"><span class="header-section-number">1.2</span> Stack Uses</h2>
 <p>One of the most common uses of stacks in a computer is in keeping track of the functions that are called duing program execution. Suppose that your main calls function A, which calls B, which calls C, which calls D. When D terminates, control goes back to C. When C terminates, control goes back to B, and so on and so forth. You’ll notice that the order in which the functions were encountered is opposite to the order in which the control returns. A stack lends itself easily to such scenarios.</p>
 <p>Another example of stack use is in reversing words. If the letters of the word are pushed onto a stack in the order in which they are encountered, then they can be popped of in the reverse order.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>push R          //in what order will the word “RACECAR” be popped after being </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>push A          //pushed onto a stack?</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>push R          <span class="co">//in what order will the word “RACECAR” be popped after being </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>push A          <span class="co">//pushed onto a stack?</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>push C</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>push E</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>push C</span>
@@ -350,14 +350,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>the operands should ALWAYS be in their original order</li>
 <li>an operator should ALWAYS be placed after the operands on which it will operate. (it doesn’t have to be immediately after)</li>
 </ul>
-<p>It might be simple to see how to get from infix to postfix with short expressions but it gets complicated real quick with longer expressions. I suggest grouping and numbering different operations in order to guide you in converting from infix to postfix. <img src="images/lesson4.png" class="img-fluid"></p>
+<p>It might be simple to see how to get from infix to postfix with short expressions but it gets complicated real quick with longer expressions. I suggest grouping and numbering different operations in order to guide you in converting from infix to postfix.</p>
+<p><img src="images/lesson4.png" class="img-fluid"></p>
 </section>
 <section id="evaluating-postfix-expressions." class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="evaluating-postfix-expressions."><span class="header-section-number">3.2</span> Evaluating postfix expressions.</h2>
 <p>As we mentioned earlier, we use a stack to evaluate postfix expressions. But how exactly? We go through the postfix expression from left to right. If we encounter an operand, we push it onto the stack. However, If we encounter an operator, we pop the top two items from the stack, evaluate it, and push the result back onto the stack.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>a = Pop();</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>b = Pop();</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>Push(eval(a, b));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="fu">Pop</span><span class="op">();</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="fu">Pop</span><span class="op">();</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Push</span><span class="op">(</span><span class="fu">eval</span><span class="op">(</span>a<span class="op">,</span> b<span class="op">));</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>For example, if our postfix expression was <code>5 2 9 * +</code></p>
 <table class="table">
 <thead>
@@ -492,34 +493,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The actual algorithm for converting from infix to postfix is given below.</p>
 <p>We shall use it to convert a few examples of expressions and hopefully it’ll become clearer.</p>
 <p>The expression that we will convert is <code>3 * 4 - ( 7 – 8 / 2 )</code></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>    infixQ ← infix expression</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>    infixQ ← infix expression</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    postfixQ ← empty queue</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    operS ← empty stack</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    repeat</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        token ← infixQ.dequeue()</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        if token is an operand</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        token ← infixQ<span class="op">.</span><span class="fu">dequeue</span><span class="op">()</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> token is an operand</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        then</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            postfixQ.enqueue(token)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        else if token is a right parenthesis</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            postfixQ<span class="op">.</span><span class="fu">enqueue</span><span class="op">(</span>token<span class="op">)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span> token is a right parenthesis</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        then</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            op ← operS.pop()</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            while op is not a left parenthesis</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                postfixQ.enqueue(op)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                op ← operS.pop()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            op ← operS<span class="op">.</span><span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> op is not a left parenthesis</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                postfixQ<span class="op">.</span><span class="fu">enqueue</span><span class="op">(</span>op<span class="op">)</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                op ← operS<span class="op">.</span><span class="fu">pop</span><span class="op">()</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            end</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        else</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            op ← operS.peek()</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            while stack_priority(op) &gt;= infix_priority(token)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                op ← operS.pop()</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                postfixQ.enqueue(op)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                op ← operS.peek()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            op ← operS<span class="op">.</span><span class="fu">peek</span><span class="op">()</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="fu">stack_priority</span><span class="op">(</span>op<span class="op">)</span> <span class="op">&gt;=</span> <span class="fu">infix_priority</span><span class="op">(</span>token<span class="op">)</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                op ← operS<span class="op">.</span><span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                postfixQ<span class="op">.</span><span class="fu">enqueue</span><span class="op">(</span>op<span class="op">)</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                op ← operS<span class="op">.</span><span class="fu">peek</span><span class="op">()</span></span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>            end</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>            operS.push(token)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>            operS<span class="op">.</span><span class="fu">push</span><span class="op">(</span>token<span class="op">)</span></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        end</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    until infixQ is empty</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    while operS is not empty</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        op ← operS.pop()</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        postfixQ.enqueue(op)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> operS is not empty</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        op ← operS<span class="op">.</span><span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        postfixQ<span class="op">.</span><span class="fu">enqueue</span><span class="op">(</span>op<span class="op">)</span></span>
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <table class="table">
 <thead>

@@ -26,7 +26,7 @@ Using the rules above we can convert this tree:
 
 into this:
 
-![](images/7 (2).png){ig-align="center" width=500px }
+![](images/7 (1).png){ig-align="center" width=500px }
 
 # 2-3 trees
 So you might have noticed a couple of things about binary search trees in the last chapter, both of which have to do with the binary search tree's apparent quick searching $(log_2n)$. First, the search time is only as low as $O(log_2n)$ if the binary search tree is balanced. If our tree turns out to be very one sided, then our search 
@@ -40,7 +40,7 @@ So far we've said that a 2-3 tree is a balanced tree where each node has up to t
 
 With a binary tree, we have two children per node, and we only have to make one comparison (and decision) in order to determine which subtree to traverse to. Wellif we're going to have three subtrees, then we need two comparisons, which in turn means that we need two pieces of data.
 
-A node of a 2-3 tree holds up to 2 pieces of data, and its three children represent values less than, in between, and greater than those values.
+A node of a 2-3 tree holds **up to 2 pieces of data**, and its three children represent values **less than**, **in between**, and **greater than** those values.
 
 ::: {layout-ncol=3}
 ![](images\7 (2).svg){ width=500px }
@@ -50,7 +50,7 @@ A node of a 2-3 tree holds up to 2 pieces of data, and its three children repres
 ![](images/7 (4).svg){ width=500px }
 :::
 
-Insertions are always done at the leaves, all leaves are at the same level (hence the balanced part), and all data is stored in sorted order within the nodes.
+Insertions are **always** done at the leaves, all leaves are at the same level (hence the balanced part), and all data is stored in sorted order within the nodes.
 
 ## Insertions!
 So here are a few rules to remember.
@@ -63,15 +63,11 @@ then just insert it there (smaller value on the left).
 
 Let's try inserting the sequence *1, 2, 3, 4, 5, 6, 7, 8, 9, 10*.
 
+![](images\7 (4).png){fig-align="center" width=500px }
 
 Let's try another sequence to drive this point home. *8, 12,3, 5, 9, 15, 17, 7*
 
 ![](images\7 (3).png){fig-align="center" width=600px }
-
-Let's try another sequence to drive this point home. *8, 12,3, 5, 9, 15, 17, 7*
-
-
-![](images\7 (4).png){fig-align="center" width=500px }
 
 An online tool to visualize the insertions can be found at https://goo.gl/LrNhwJ [https://goo.gl/LrNhw](https://goo.gl/LrNhw){.external target="_blank"}
 
@@ -84,9 +80,7 @@ Another feature of a heap is that it is always balanced. This means that the lea
 
 Below is an example of a max heap. You'll notice two properties (that we've already alluded to).
 
-- Every non leaf has exactly two children (hence the balanced shape). There 
-are cases where you will have only one node on the bottom level having one
-child.
+- Every non leaf has exactly two children (hence the balanced shape). There are cases where you will have only one node on the bottom level having one child.
 - Every node has a value at least as large as its children
 
 ![](images/7 (5).svg){ fig-align="center" width=500px }
@@ -132,7 +126,7 @@ That was an easy insertion. What about if we wanted to insert 80 into the heap a
 
 ![](images/7 (9).svg){fig-align="center" width=500px }
 
-::: {.callout}
+::: {.callout-important title="Activity" collapse="true" icon=false}
 Let's see if you can come up with the heap after inserting the 
 following values in the order in which they are given.
 
@@ -181,7 +175,8 @@ The next part is a process that is referred to as **max-heapify** (yes...compute
 
 ![](images/7 (18).svg){fig-align="center" width=500px }
 
-::: {.callout}
+
+::: {.callout-important title="Activity" collapse="true" icon=false}
 Now let's see if you can delete the 9 from the heap you created in 
 the last activity.
 

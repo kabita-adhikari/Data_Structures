@@ -19,18 +19,9 @@ Insertions and deletions became slower as a result. This is because we would hav
 to expand and collapse the list respectively, both of which required data 
 movement, and that is an expensive step particularly for larger data sizes.
 
-To speed up insertions and deletions, we turned to linked lists. Insertion and 
-deletion in a linked list did not require any major data movement; we simply 
-adjusted a few nodes in the list. However, the draw back for linked lists is that 
-they must be processed sequentially i.e. we had to traverse from the head in their
-proper order to find or process any node. So even though the insertion and 
-deletion didn't require much data movement, we had to begin our searches at the
-first node in the list every time.
+To speed up insertions and deletions, we turned to linked lists. Insertion and deletion in a linked list did not require any major data movement; we simply adjusted a few nodes in the list. However, the draw back for linked lists is that they must be processed sequentially i.e. we had to traverse from the head in their proper order to find or process any node. So even though the insertion and deletion didn't require much data movement, we had to begin our searches at the first node in the list every time.
 
-The next data structure that we will discuss is the binary tree which attempts to 
-combine the best features of arrays and linked lists i.e. it allows quick searching 
-(like in an ordered array), but also allow fast insertion and deletion (like a linked 
-list)
+The next data structure that we will discuss is the binary tree which attempts to combine the best features of arrays and linked lists i.e. it allows quick searching (like in an ordered array), but also allow fast insertion and deletion (like a linked list)
 
 # What exactly is a binary tree?
 A binary tree is a data structure made up of nodes (kinda like linked lists) connected by **edges**. Nodes typically contain “entities” or complex objects, and the edges represent node inter-relatedness.
@@ -60,7 +51,7 @@ The **height** of a tree is the number of nodes on the longest path from the roo
 
 From the description thus far, it stands to reason that the implementation of a node of a binary tree is very similar to the node of a linked list. However, instead of just keeping track of the link to the next node, it must keep track of both its leftand right children.
 
-```{.default}
+```java
 class TreeNode // missing accessors, mutators, constructor, etc.
 {
     private int data;
@@ -90,7 +81,7 @@ The order in which these are done lead to three commonly used traversals of a bi
 It should be easy to see that these traversal algorithms are recursive. (remember recursion from Chapter 12)
 Lets look at an easy example of an inorder traversal to print out the data in each node.
 
-```{.default}
+```java
 void InOrder(TreeNode n)
 {
     if (n != null)
@@ -101,12 +92,13 @@ void InOrder(TreeNode n)
     }
 }
 ```
-:::{.callout}
+::: {.callout-important title="Activity" collapse="true" icon=false}
 Let's see if you can come up with the PreOrder and PostOrder
 traversal algorithms. Given how the InOrder looks above, coming up 
 with the remaining two traversals should be trivial.
 :::
-:::{.callout}
+
+::: {.callout-important title="Activity" collapse="true" icon=false}
 What would the inorder, preorder, and postorder traversals for the 
 tree in the diagram on page 2 look like?
 :::
@@ -145,15 +137,15 @@ For example, suppose I wanted to add a 55 to the binary search tree we saw earli
 
 ![](images/6 (4).svg){ fig-align="center" width=300px }
 
-:::{.callout}
+:::{.callout-important title="Activity" collapse="true" icon=false}
 Try and insert the following nodes to the tree above.
 ` 65, 68, 79 `
 
-![](images/6 (5).svg){width=300px}
+![](images/6 (5).svg){fig-align="center" width=300px}
 
 :::
 
-```{.default}
+```java
 /* 
  this function inserts the integer x into the tree in the appropriate position 
 */ 
@@ -260,7 +252,7 @@ What if it was a more complicated tree?
 
 ## Printing trees
 Recursion provides a pretty nifty way of printing trees. They can be printed from right to left using the function below. In it, the variable lev refers to the number of tabs.
-```{.default}
+```java
 void print(TreeNode n, int lev) 
 { 
     if (n != null) 
@@ -284,7 +276,7 @@ The diagramatic representation of a tree can be recreated from its in order and 
 Remember that inorder is LNR i.e. visit the left subtree, then the node, then the right, whereas preorder is NLR i.e. visit the node first, then the left subtree and end with the right subtree.
 
 For example consider the two sequences below.
-```{.default}
+```java
 Inorder:  B C E F G H J K P R S X Z
 preorder: J E B C G F H P K S R X Z
 ```

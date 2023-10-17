@@ -32,5 +32,4 @@ We can also compare the structures in terms of their usefulness.
 
 
 
-We've also covered some special purpose structures such as stacks and queues, which are used to aid some specific algorithms. These abstract data types are implemented using the more fundamental data structures such as linked lists and arrays. (as you learned during your 
-programming assignments)
+We've also covered some special purpose structures such as stacks and queues, which are used to aid some specific algorithms. These abstract data types are implemented using the more fundamental data structures such as linked lists and arrays. (as you learned during your programming assignments)

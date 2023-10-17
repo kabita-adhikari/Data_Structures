@@ -46,7 +46,7 @@ In reality, the linked list looks more like the diagram below where the link por
 
 What about in code? What does a node look like in java. We'll use a simple node where the data is an integer,and therefore our linked list will store multiple integers.
 
-```{.default}
+```java
 class Node
 {
     private int data;                      //data is an integer.
@@ -120,7 +120,7 @@ A few things to note about the code and diagrams above.
 ## Traversing the list
 Recall that we can only move down the list in one direction. Typically, the link of the last node of the linked list will be *null*. We can use these properties to traverse the list. This comes in handy in scenarios, such as when one wants to print out the contents of the list starting with the head.
 
-```{.default}
+```java
 Node curr = head;
 while(curr != null)
 {
@@ -226,7 +226,7 @@ Even though the last program we looked at built a linked list, we are going to d
 ## Building forward
 We will need three pointers to build the list: one to point to the first (or head) which should not be moved, one to point to the last (or tail) node in the list, and one to create the new node. In this example, we'll call them *first, last*, and *curr* respectively.
 
-```{.default}
+```java
 Node first, last, curr;
 int num;
 …
@@ -257,7 +257,7 @@ The code above can be put into a loop to create the list in the forward directio
 ## Building backward
 When building backward, we insert the new node at the beginning of the list. We therefore do not need to have *last* BUT we'll need *first*. BTW, It will always keep changing with each insertion.
 
-```{.default}
+```java
 Node first, curr;
 int num;
 …
@@ -290,7 +290,7 @@ Yes it's a thing. Every node has two links instead of the more traditional one l
 
 With doubly linked lists, insertion and deletion typically require the modification of two nodes i.e. the preceding and proceeding nodes.
 
-```{.default}
+```java
 class Node
 {
     int data;

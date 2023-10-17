@@ -27,7 +27,7 @@ With <b>indirect addressing</b>, the location associated with the variable store
 
 ![](images/two.svg){width=50%}
 
-```{.default}
+```java
 char ch = ‘a’; //direct addressing    
 String str = “dog”;     
 
@@ -46,7 +46,7 @@ This is sometimes represented as
 ## What does this mean for our programming?
 ### Creating objects
 
-``` { .default }
+``` java
 // This is a basic class representing a circle All it stores is the radius. 
 // It has a constructor, an accessor and a mutator.
 class Circle
@@ -78,7 +78,7 @@ class Circle
 }
 ```
 Given the Circle class defined above, let’s write some lines of code and see what happens in memory, and how it can be represented diagramatically. We shall also be manipulating a primitive type (int) so that you can notice the contrast between the two.
-``` { .default }
+```java
 // Simple declaration of two variables. 
 // One is an object of type Circle and the other is a primitive integer
 Circle a; 
@@ -89,13 +89,13 @@ int x;
 Notice that without any initialization, Java will put some default values in those memory locations. For objects, the default value is null to mean the lack of a reference (or address). The default value for ints is 0.
 
 FYI null can also be used in object comparison
-```{.default}
+```java
 if (a== null)
     System.out.println(“Circle has not been initialized”);
 ```
 
 
-``` {.default}
+``` java
 // Assigning initial values to both a and x. 
 // For a, this involves creating a circle object and passing it any required  parameters.
 
@@ -108,7 +108,7 @@ x = 5;
 
 While the location associated with x stores the actual value of x (i.e. 5), the location associated with a stores the address of a location in memory (12AB) where the information representing the circle object is actually stored. This means x is stored by value, and a is stored by reference. Declaration and Initialization can also be done in a single step.
 
-```{.default}
+```java
 Circle b = new Circle(7);
 int y = 7;
 ```
@@ -122,7 +122,7 @@ Both a and b are objects and therefore are stored by reference while x and y whi
 ### Assigning objects
 When a primitive type is assigned, the value stored in the location is copied to the new location.
 
-```{.default}
+```java
 x = y;      // This copies the value that was in y into x.
 a = b;      // This copies the reference stored in b into a
 ```
@@ -135,7 +135,8 @@ However, when an object is assigned, whatever is stored in the source location i
 There are a couple of implications of this behavior.
 
 - Firstly, the original circle located at 12AB is no longer accessible. The memory location is being used to store the circle, but that circle can no longer be used since there is no way to get to it. The space it takes up is now referred to as garbage. Java automatically cleans garbage(garbage collection) so that the computer/program has access to that memory eventually. This is not the case in other languages.
-```{.default}
+
+```java
 Circle c;
 for (int n = 0; n < 100; n++)
 {
@@ -149,7 +150,7 @@ created circle and not the 99 circles before that (which now constitute garbage)
 ### Objects as parameters to functions/methods
 That last point we discussed might seem very small and avoidable but in reality it isn’t. That’s because whenever an object is passed as a parameter in a function, it is passed by reference. So even if it might have another variable name in the function, any changes to the object will affect the original object.
 
-```{.default}
+```java
 class Test
 {
     public static void main(String [] args)
@@ -174,7 +175,7 @@ class Test
 ### Arrays
 We have mentioned how primitive types are stored and passed (i.e. by value) and how objects are stored and passed (i.e. by reference). But what about arrays? Recall that with primitive types, the variable name is mapped directly to a memory location that contains the value associated with that variable (by value). Conversely, with objects, the variable name is mapped to a memory location that contains the address of another place in memory where the object state is being stored (by reference). Arrays (of any type) are treated like objects. That means that the array name is mapped to a memory location that contains the address of the first of a block of memory locations that contain the array elements i.e. arrays are passed by reference. This means that if you pass an array as an argument to a function, that function is in fact dealing with the original array and therefore any changes to the array will last even after control has been passed back to the original function.
 
-```{.default}
+```java
 import java.util.*
 class Trial
 {
@@ -203,7 +204,7 @@ Notice in the example above how the selectionSort function doesn’t have a retu
 
 ### Arrays of Objects
 Occasionally, it is necessary to create an array of objects. If objects are mapped by reference, and arrays are mapped by reference, then what about arrays of objects?
-```{.default}
+```java
 int [] arr = new int [10]; // an array of primitives (for comparison)
 Circle [] circles = new Circle [10];  // an array of circle objects which by default are all set
                                      // null. Any of the circle elements can now be initialized.
@@ -212,7 +213,7 @@ circles[4] = new Circle(8);
 ```
 The variable name of the array will store the first address of a block of memory cells that have been set aside to store addresses for the objects. Think of it as circles is storing a key, and that key opens a chest of drawers each of which has another key to a circle in another location. Incidentally, this idea of a variable name storing a reference to an array of references is the same way a multidimensional array is dealt with.
 
-```{.default}
+```java
 int [][] arr = new int [4][10];       // a 2D array of 4 rows and 10 columns.
 arr[2][8] = 103;                     // store the value 103 in the 3rd row and 9th column.
 ```

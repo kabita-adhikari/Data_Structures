@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Suppose that as dinner host, your roles involve having short conversations with not just everyone individually, but every possible grouping of your guests. For example with 3 guests, A, B and C. You have to have a conversation with A, B, C, AB, AC, BC, and ABC (i.e.&nbsp;7 conversations). You don’t need to be an introvert to be daunted by such a task because it grows even faster than the quadratic category discussed earlier. With 4 guests (ABCD), you would need to have 15 conversations i.e.&nbsp;A, B, C, D, AB, AC, AD, BC, BD, CD, ABC, ABD, ACD, BCD, and ABCD. Notice how adding a single guest has basically doubled the amount of work you have to do. It would require 31 conversations for 5 guests, and 63 for 6 guests. This category of problems is <strong>exponential</strong> or <strong><span class="math inline">\(O(2^n)\)</span></strong>, and algorithms in this category are typically avoided because their runtimes get very ugly even for relatively small data sizes. You might recall that we discussed the towers of Hanoi in the Living with Cyber series. The best solution to Towers of Hanoi falls in this category.</p>
 <p>One other task as dinner host could be deciding how to seat all your guests. Perhaps your guests are very particular about how they should be seated, who they seat next to, etc. Figuring out a seating arrangement even with basic limitations might involve enumerating all the different seating possibilities, and then ranking them and choosing the best. For example, with three guests (ABC), they could be sat as ABC, ACB, BAC, BCA, CBA or CAB. This means that with just 3 guests, I have to write out and compare 6 different seating arrangements. With 4 guests (ABCD), they could be arranged as ‘ABCD’, ‘ABDC’, ‘ACBD’, ‘ACDB’, ‘ADBC’, ‘ADCB’, ‘BACD’, ‘BADC’, ‘BCAD’, ‘BCDA’, ‘BDAC’, ‘BDCA’, ‘CABD’, ‘CADB’, ‘CBAD’, ‘CBDA’, ‘CDAB’, ‘CDBA’, ‘DABC’, ‘DACB’, ‘DBAC’, ‘DBCA’, ‘DCAB’, or ‘DCBA’ for a grand total of 24 arrangements. This category is perhaps the worst of the worst and is referred to as <strong>factorial</strong> or <strong><span class="math inline">\(O(n!)\)</span></strong>. This explains why making seating arrangements at weddings is a very stressful and time intensive venture.</p>
 <p>One last task. Supposed that in the game we mentioned earlier (where your guests are standing in order of height), you have a task of figuring out whom among your guests has a specific height (which is given in units you are unfamiliar with but which your guests are comfortable with). A quick approach (which should also be familiar to you) would be to go to the middle of the line, and ask that guest if he/ she is the height you’re looking for. It should also be easy to determine whether he/she is taller or shorter than the required height, and as a result you will discard half your guest list from possible suspects. This is similar to the binary search algorithm that you are familiar with. As discussed in Living with Cyber, this algorithm belongs in the <strong>logarithmic</strong> category or <strong><span class="math inline">\(O(log_2n)\)</span></strong>. Algorithms in this category typically reduce the size of the data at each step (by half in this case).</p>
-<p>There is another major category called the <strong>quasi-linear / linearithmic</strong> or <strong><span class="math inline">\(O(nlog_2n)\)</span></strong>. It doesn’t grow as fast as O(n2) but is faster than O(n). There are a few sorting algorithms that fall into this category that we will be discussing later in the course.</p>
+<p>There is another major category called the <strong>quasi-linear / linearithmic</strong> or <strong><span class="math inline">\(O(nlog_2n)\)</span></strong>. It doesn’t grow as fast as <span class="math inline">\(O(n^2)\)</span> but is faster than O(n). There are a few sorting algorithms that fall into this category that we will be discussing later in the course.</p>
 <p>Broadly speaking, those are the main big-O categories. Once you understand them, you should be able to look at different algorithms and determine which group or family they belong to. Sometimes this involves looking at the algorithm itself, and other times it involves looking at a mathematical expression for its runtime, <span class="math inline">\(T(n)\)</span> given in terms of its data size, <span class="math inline">\(n\)</span>. Can you describe the order of growth from these functions using the big-O notation?<br>
 <span class="math display">\[n^3 +2n\]</span> <span class="math display">\[2n^3 + n^2\]</span> <span class="math display">\[n+2nlog(n)\]</span> <span class="math display">\[3n +2n^7\]</span> <span class="math display">\[n(n+3)/2\]</span> <span class="math display">\[6\]</span> <span class="math display">\[1+n^2 +2n^3+3n^4+2^n\]</span> <span class="math display">\[n^3+2n log(n)\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -175,50 +175,50 @@ Note
 <section id="starting-with-the-algorithm" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Starting with the algorithm</h1>
 <p>Keeping with food, let’s look at a few algorithms you must have used at some point in your lives [2].</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>public donut takeDonut(donut [] box)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    return box[0]; //return the donut in the first position of donut box</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> donut <span class="fu">takeDonut</span><span class="op">(</span>donut <span class="op">[]</span> box<span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> box<span class="op">[</span><span class="dv">0</span><span class="op">];</span> <span class="co">//return the donut in the first position of donut box</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What complexity do you think the algorithm above demonstrates? Does it depend on the number of donuts in the box?</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>public void eatFries(fries [] box)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    for(int i = 0; i &lt; box.length; i++)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        //dip chip in ketchup</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        //eat fry</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">eatFries</span><span class="op">(</span>fries <span class="op">[]</span> box<span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> box<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">//dip chip in ketchup</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">//eat fry</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What about the complexity of the algorithm above? What kind of relationship is there between its runtime and the number of fries in the box?</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>// Every guest comes with a different kind of food   to a potluck i.e. number</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>// of guests is the same as the types of food</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Every guest comes with a different kind of food   to a potluck i.e. number</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">// of guests is the same as the types of food</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>public void divideFood(ArrayList&lt;Food&gt;potluck)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    // for each dish in the potluck</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    for (Food dish : potluck)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        // divide food into proper portion sizes based on guest list size.</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        for (int j = 0; j &lt; potluck.size(); j++)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            // cut up the food</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">divideFood</span><span class="op">(</span><span class="bu">ArrayList</span><span class="op">&lt;</span>Food<span class="op">&gt;</span>potluck<span class="op">)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// for each dish in the potluck</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>Food dish <span class="op">:</span> potluck<span class="op">)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// divide food into proper portion sizes based on guest list size.</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> potluck<span class="op">.</span><span class="fu">size</span><span class="op">();</span> j<span class="op">++)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="co">// cut up the food</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>What about the algorithm above? Cutting up the food grows as the amount of food in the potluck grows? Does it grow in a linear fashion or not? Play through the scenario in your head to see if you can recognize the pattern. Two people, everything is cut into two pieces (for a total of 4 portions). Three people, everything is cut into three pieces (for a total of 9 portions). Four people, four pieces each (16 total portions).</p>
 <p>For simple algorithms, you might be able to simply look at the algorithm and determine what its complexity is. However, more often that not you will need to carry out what is referred to as a Time analysis. It involves identifying the parts of the algorithm where repetition is carried out (since repetition is the main factor that would affect runtime especially as the input size increases) and then writing out a mathematical expression (T(n)) that describes how long a basic statement in that loop would be executed. Once the T(n) expression has been completed, determining the O() is just a matter of <strong>identifying the most dominant term in the expression and ignoring any constants</strong>. Let’s look at a few examples of code and see if we can deduce their complexities.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>for (int k=0; k&lt;n; k++)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    ...      // How many times will this statement be executed?</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k<span class="op">=</span><span class="dv">0</span><span class="op">;</span> k<span class="op">&lt;</span>n<span class="op">;</span> k<span class="op">++)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">...</span>      <span class="co">// How many times will this statement be executed?</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Any line in the <span class="math inline">\(for\)</span> loop above will be executed n times. Therefore <span class="math inline">\(T(n) = c*n\)</span> and its complexity is O(n). The constant term c is a multiplier we use to define how long the statements in the loop would take to execute in a single iteration. What about the one below.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>for (int k=0; k&lt;n; k++)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    ...     // How many times will this statement be executed?</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    for (int j=0; j&lt;n; j++)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        ...    //What about this statement?</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k<span class="op">=</span><span class="dv">0</span><span class="op">;</span> k<span class="op">&lt;</span>n<span class="op">;</span> k<span class="op">++)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">...</span>     <span class="co">// How many times will this statement be executed?</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j<span class="op">=</span><span class="dv">0</span><span class="op">;</span> j<span class="op">&lt;</span>n<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">...</span>    <span class="co">//What about this statement?</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="math inline">\(T(n) = cn^2 + dn\)</span> which means it is <span class="math inline">\(O(n^2)\)</span>.</p>
 <p>Those were fairly straight forward. What about these ones?</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>for (k=0; k&lt;n/2; k++)</span>
@@ -230,21 +230,21 @@ Note
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="math inline">\(T(n) = (cn^3 +dn)/2\)</span> which means it is <span class="math inline">\(O(n^3)\)</span>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>for (k=0; k&lt;n/2; k++)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    ...  // This statement occurs n/2 times</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>for (j=0; j&lt;n*n; j++)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    ...  //This statement occurs n*n = n^2 times</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>k<span class="op">=</span><span class="dv">0</span><span class="op">;</span> k<span class="op">&lt;</span>n<span class="op">/</span><span class="dv">2</span><span class="op">;</span> k<span class="op">++)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">...</span>  <span class="co">// This statement occurs n/2 times</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>j<span class="op">=</span><span class="dv">0</span><span class="op">;</span> j<span class="op">&lt;</span>n<span class="op">*</span>n<span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">...</span>  <span class="co">//This statement occurs n*n = n^2 times</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="math inline">\(T(n) = cn^2 +(dn)/2\)</span> which means it is <span class="math inline">\(O(n^2)\)</span>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>k = n;</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>while (k &gt; 1)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    k /= 2;  //integer division - log2n</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> n<span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>k <span class="op">&gt;</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">...</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    k <span class="op">/=</span> <span class="dv">2</span><span class="op">;</span>  <span class="co">//integer division - log2n</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><span class="math inline">\(T(n) = c*log_2n\)</span> which means it is <span class="math inline">\(O(log_2n)\)</span>.<br>
 <span class="math inline">\(log_2n\)</span> implies division by 2.<br>
 <span class="math inline">\(log_3n\)</span> implies division by 3.<br>

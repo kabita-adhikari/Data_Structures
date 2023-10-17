@@ -125,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Using the rules above we can convert this tree:</p>
 <p><img src="images/7 (2).png" class="img-fluid" data-ig-align="center" width="500"></p>
 <p>into this:</p>
-<p><img src="images/7 (2).png" class="img-fluid" data-ig-align="center" width="500"></p>
+<p><img src="images/7 (1).png" class="img-fluid" data-ig-align="center" width="500"></p>
 </section>
 <section id="trees" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> 2-3 trees</h1>
@@ -135,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="2.1" class="anchored" data-anchor-id="so-what-is-a-2-3-tree"><span class="header-section-number">2.1</span> So what is a 2-3 tree?</h2>
 <p>So far we’ve said that a 2-3 tree is a balanced tree where each node has up to three children. Well there are a few more rules.</p>
 <p>With a binary tree, we have two children per node, and we only have to make one comparison (and decision) in order to determine which subtree to traverse to. Wellif we’re going to have three subtrees, then we need two comparisons, which in turn means that we need two pieces of data.</p>
-<p>A node of a 2-3 tree holds up to 2 pieces of data, and its three children represent values less than, in between, and greater than those values.</p>
+<p>A node of a 2-3 tree holds <strong>up to 2 pieces of data</strong>, and its three children represent values <strong>less than</strong>, <strong>in between</strong>, and <strong>greater than</strong> those values.</p>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
@@ -149,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>Insertions are always done at the leaves, all leaves are at the same level (hence the balanced part), and all data is stored in sorted order within the nodes.</p>
+<p>Insertions are <strong>always</strong> done at the leaves, all leaves are at the same level (hence the balanced part), and all data is stored in sorted order within the nodes.</p>
 </section>
 <section id="insertions" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="insertions"><span class="header-section-number">2.2</span> Insertions!</h2>
@@ -161,16 +161,15 @@ ul.task-list li input[type="checkbox"] {
 <li>If you are forced to temporarily push a third piece of data into a node, that node splits up into two nodes with the two extreme values in them, and the middle value is promoted to the parent node.</li>
 </ul>
 <p>Let’s try inserting the sequence <em>1, 2, 3, 4, 5, 6, 7, 8, 9, 10</em>.</p>
-<p>Let’s try another sequence to drive this point home. <em>8, 12,3, 5, 9, 15, 17, 7</em></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images\7 (3).png" class="img-fluid figure-img" width="600"></p>
+<p><img src="images\7 (4).png" class="img-fluid figure-img" width="500"></p>
 </figure>
 </div>
 <p>Let’s try another sequence to drive this point home. <em>8, 12,3, 5, 9, 15, 17, 7</em></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images\7 (4).png" class="img-fluid figure-img" width="500"></p>
+<p><img src="images\7 (3).png" class="img-fluid figure-img" width="600"></p>
 </figure>
 </div>
 <p>An online tool to visualize the insertions can be found at https://goo.gl/LrNhwJ <a href="https://goo.gl/LrNhw" class="external" target="_blank">https://goo.gl/LrNhw</a></p>
@@ -244,12 +243,18 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="images/7 (9).svg" class="img-fluid figure-img" width="500"></p>
 </figure>
 </div>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Let’s see if you can come up with the heap after inserting the following values in the order in which they are given.</p>
 <p>&nbsp;&nbsp;1, 3, 5, 7, 9, 8, 6, 4, 2</p>
 <div class="quarto-figure quarto-figure-center">
@@ -334,12 +339,18 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="images/7 (18).svg" class="img-fluid figure-img" width="500"></p>
 </figure>
 </div>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Now let’s see if you can delete the 9 from the heap you created in the last activity.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">

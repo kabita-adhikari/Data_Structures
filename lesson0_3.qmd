@@ -11,7 +11,8 @@ format:
 # A short introduction on Data structures
 
 You don't have to search for long to see different ways of organizing data in real life situations. Standing in line at the cafeteria, picking the winner in a March Madness bracket, writing down a shopping list, etc. All these examples allow us to use a certain resource in a manner that makes life somewhat easier. Computer Science, as a field, borrows a lot of these ideas in organizing data. The way that a programmer views and organizes the data that his/her program is using has bearing on the success/failure of multiple algorithms. Whereas the primitive types (int, float, double, long, char, byte, short, boolean) are adequate for simple programs, most programs you’ll be writing deal with large amounts of complicated and related data. In order to deal with such data, some structures have been used to represent this data and its relationships.
-{{< pagebreak >}}
+
+
 Some data structures are based on how the programmer organizes the data i.e. how it is organized in memory. These structures are typically used as the basic building blocks of other structures. It is important to remember that with these structures, the implementation of the organization is what is important...more important than what kind of data is being organized, or when that data was encountered and/or organized.
 
 - Arrays are the most basic. Recall from the Living with Cyber classes, that arrays are used to store similar data in contiguous memory locations. They are available in almost all programming languages and data is accessed using its relative position (i.e. index)

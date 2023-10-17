@@ -41,7 +41,7 @@ One other task as dinner host could be deciding how to seat all your guests. Per
 
 One last task. Supposed that in the game we mentioned earlier (where your guests are standing in order of height), you have a task of figuring out whom among your guests has a specific height (which is given in units you are unfamiliar with but which your guests are comfortable with). A quick approach (which should also be familiar to you) would be to go to the middle of the line, and ask that guest if he/ she is the height you’re looking for. It should also be easy to determine whether he/she is taller or shorter than the required height, and as a result you will discard half your guest list from possible suspects. This is similar to the binary search algorithm that you are familiar with. As discussed in Living with Cyber, this algorithm belongs in the **logarithmic** category or **$O(log_2n)$**. Algorithms in this category typically reduce the size of the data at each step (by half in this case). 
 
-There is another major category called the **quasi-linear / linearithmic** or **$O(nlog_2n)$**. It doesn’t grow as fast as O(n2) but is faster than O(n). There are a few sorting algorithms that fall into this category that we will be discussing later in the course. 
+There is another major category called the **quasi-linear / linearithmic** or **$O(nlog_2n)$**. It doesn’t grow as fast as $O(n^2)$ but is faster than O(n). There are a few sorting algorithms that fall into this category that we will be discussing later in the course. 
 
 Broadly speaking, those are the main big-O categories. Once you understand them, you should be able to look at different algorithms and determine which group or family they belong to. Sometimes this involves looking at the algorithm itself, and other times it involves looking at a mathematical expression for its runtime, $T(n)$ given in terms of its data size, $n$.
 Can you describe the order of growth from these functions using the big-O notation?\
@@ -57,7 +57,7 @@ Remember the trick is to pick the dominant term and ignore the constants. Basica
 
 # Starting with the algorithm
 Keeping with food, let’s look at a few algorithms you must have used at some point in your lives [2].
-```{.default}
+```java
 public donut takeDonut(donut [] box)
 {
     return box[0]; //return the donut in the first position of donut box
@@ -66,7 +66,7 @@ public donut takeDonut(donut [] box)
 
 What complexity do you think the algorithm above demonstrates? Does it depend on the number of donuts in the box?
 
-```{.default}
+```java
 public void eatFries(fries [] box)
 {
     for(int i = 0; i < box.length; i++)
@@ -77,7 +77,7 @@ public void eatFries(fries [] box)
 }
 ```
 What about the complexity of the algorithm above? What kind of relationship is there between its runtime and the number of fries in the box?
-```{.default}
+```java
 // Every guest comes with a different kind of food   to a potluck i.e. number
 // of guests is the same as the types of food
 
@@ -97,7 +97,7 @@ public void divideFood(ArrayList<Food>potluck)
 What about the algorithm above? Cutting up the food grows as the amount of food in the potluck grows? Does it grow in a linear fashion or not? Play through the scenario in your head to see if you can recognize the pattern. Two people, everything is cut into two pieces (for a total of 4 portions). Three people, everything is cut into three pieces (for a total of 9 portions). Four people, four pieces each (16 total portions).
 
 For simple algorithms, you might be able to simply look at the algorithm and determine what its complexity is. However, more often that not you will need to carry out what is referred to as a Time analysis. It involves identifying the parts of the algorithm where repetition is carried out (since repetition is the main factor that would affect runtime especially as the input size increases) and then writing out a mathematical expression (T(n)) that describes how long a basic statement in that loop would be executed. Once the T(n) expression has been completed, determining the O() is just a matter of **identifying the most dominant term in the expression and ignoring any constants**. Let's look at a few examples of code and see if we can deduce their complexities.
-```{.default}
+```java
 for (int k=0; k<n; k++)
 {
     ...      // How many times will this statement be executed?
@@ -105,7 +105,7 @@ for (int k=0; k<n; k++)
 ```
 
 Any line in the $for$ loop above will be executed n times. Therefore $T(n) = c*n$ and its complexity is O(n). The constant term c is a multiplier we use to define how long the statements in the loop would take to execute in a single iteration. What about the one below.
-```{.default}
+```java
 for (int k=0; k<n; k++)
 {
     ...     // How many times will this statement be executed?
@@ -131,7 +131,7 @@ for (k=0; k<n/2; k++)
 ```
 $T(n) = (cn^3 +dn)/2$ which means it is $O(n^3)$.
 
-```{.default}
+```java
 for (k=0; k<n/2; k++)
 {
     ...  // This statement occurs n/2 times
@@ -143,7 +143,7 @@ for (j=0; j<n*n; j++)
 ```
 $T(n) = cn^2 +(dn)/2$ which means it is $O(n^2)$.
 
-```{.default}
+```java
 k = n;
 while (k > 1)
 {

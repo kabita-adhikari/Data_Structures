@@ -154,14 +154,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For example, if we were using strings as the key, a very basic hash function would be to add numeric values associated with each character.</p>
 <p>This simple hash function H can be represented mathematically by the equation</p>
 <p><span class="math display">\[ H (Key) = \sum_{c∈Key} f(c) \]</span> <span class="math inline">\(where f(A) = 1, f(B) = 2, f(C) = 3 … f(Z) = 26\)</span></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>hash(CATS) == 43</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    //given C=3, A=1, T=20, S=19</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    // therefore CATS = (3+1+20+19) = 43</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hash</span><span class="op">(</span>CATS<span class="op">)</span> <span class="op">==</span> <span class="dv">43</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">//given C=3, A=1, T=20, S=19</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// therefore CATS = (3+1+20+19) = 43</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So we would store whatever value was associated with CATS at the 43rd index.Similarly</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hash(DOGS) == 45</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    //given D=4, O=15, G=7, S=19</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    // DOGS = (4+15+7+19) = 45</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    //settling once and for all that dogs are better than cats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hash</span><span class="op">(</span>DOGS<span class="op">)</span> <span class="op">==</span> <span class="dv">45</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">//given D=4, O=15, G=7, S=19</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// DOGS = (4+15+7+19) = 45</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">//settling once and for all that dogs are better than cats</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now one of the reasons this hash function is basic because it allows for an infinite number of indices which we know is not true. If we were just adding the characters of the string in the key, we could get anything from A (which is at index1) to a really large number (think of the longest word – which incidentally has 189,819 letters). This would not work if we had an array with only 1000 positions.</p>
 <p>We can solve this issue by restricting its output to the range by doing something like this <span class="math display">\[index = sumOfCharacterValues  \%  range \]</span> or more specifically <span class="math display">\[index = 43 \% 1000\]</span></p>
 <p>This essentially hashes any string to a value within our range. Remember you can have any kind of hash function you want as long as it produces a valid index as its output.</p>

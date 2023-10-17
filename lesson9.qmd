@@ -28,13 +28,13 @@ This simple hash function H can be represented mathematically by the equation
 $$ H (Key) = \sum_{c∈Key} f(c) $$
 $where f(A) = 1, f(B) = 2, f(C) = 3 … f(Z) = 26$
 
-```{.default}
+```java
 hash(CATS) == 43
     //given C=3, A=1, T=20, S=19
     // therefore CATS = (3+1+20+19) = 43
 ```
 So we would store whatever value was associated with CATS at the 43rd index.Similarly
-```{.default}
+```java
 hash(DOGS) == 45
     //given D=4, O=15, G=7, S=19
     // DOGS = (4+15+7+19) = 45

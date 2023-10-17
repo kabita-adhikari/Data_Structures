@@ -14,7 +14,7 @@ We've seen multiple ways of storing, representing and manipulating data during t
 # Introduction
 The field of graph theory can be traced to a problem that was posed in 1736 in the town that was called Konigsberg. The town had a river flowing around two islands in such a way as to produce four different areas of land. Those four pieces of land were connected by 7 bridges as shown in the figure below.
 
-![](images\10 (1).JPG){ width=500px }
+![](images\10 (1).JPG){ fig-align="center" width=500px }
 
 The konigsberg problem is: Starting at one land area, is it possible to walk across all the bridges exactly once and return to the starting land area?
 
@@ -22,11 +22,11 @@ The konigsberg problem is: Starting at one land area, is it possible to walk acr
 A graph is made up of vertices and edges (where vertices are analogous to nodes in a tree), and each edge is bounded by two vertices. The vertices represent some information, and the edges represent some form of relationship between the vertices. Two nodes are said to be adjacent if they are connected byan edge. The vertices adjacent to a given vertex are said to be that's vertex's neighbors. A path between any two vertices is a sequence of edges that lead 
 from the first vertex to the second. A graph is called connected if there is at leastone path from every vertex to every other vertex. In contrast, a non-connected graph could consist of several connected components.
 
-![](images\10 (1).png){ width=500px }
+![](images\10 (1).png){ fig-align="center" width=500px }
 
 A graph can be **directed** or **undirected** with the distinction being whether the edges have a direction associated with them or not. In some situations, we'd like to have some form of **weight** associated with the edges. In those cases, the graph is referred to as a **weighted graph**. The weight of the edge could represent physical distance or time cost between the two vertices.
 
-![](images\10 (2).png){ width=500px }
+![](images\10 (2).png){fig-align="center" width=500px }
 
 The figure above shows a connected and non-connected graph side by side.
 
@@ -36,10 +36,10 @@ There are two main ways that graphs are stored and represented in computer memor
 ## Adjacency matrix
 For a graph of n vertices, an adjacency matrix is an n x n matrix filled with 0's and 1's. A 1 at row 4 and column 5 means that there is an edge between the fourth and fifth vertex, while a 0 means that those two vertices are not directly connected. For example the graph at the top of this page can be represented by the adjacency matrix below.
 
-![](images\10 (3).png){ width=500px }
+![](images\10 (3).png){ fig-align="center" width=500px }
 
 
-::: {.callout}
+::: {.callout-important title="Activity" collapse="true" icon=false}
 See if you can come up with the adjacency matrices for the two other
 graphs on the previous page.
 :::
@@ -49,11 +49,11 @@ An adjacency matrix doesn't have to be just 1's and 0's. With the weighted graph
 ## Adjacency list
 The adjacency list is another way of representing a graph in memory. Each vertex is represented by its own linked list which consists of vertices that it is connected to. We can store the heads of those n linked lists in an array of size n.
 
-![](images\10 (1).svg){ width=500px }
+![](images\10 (1).svg){fig-align="center"  width=300px }
 
 The figure above shows the adjacency list representation of the first graph we looked at.
 
-::: {.callout}
+::: {.callout-important title="Activity" collapse="true" icon=false}
 See if you can come up with the adjacency lists for the two other 
 graphs on page 2.
 :::
@@ -65,19 +65,19 @@ There are two approaches to traversing a graph.
 
 ## Depth-first traversal
 The idea behind depth-first is to travel as far away from the source vertex as quickly as possible and only back up when you reach a dead end. Interestingly, this approach can be implemented using a stack. We store the possible vertices tobe visited on a stack, and we put the visited vertices in a queue so that we know the exact order in which we visited them.
-```{.default}
+```java
 Depth-first Traversal:
     push source vertex onto stack
     while stack is not empty:
         v = stack.pop()
-        if v hasn't been visited yet:
+        if v hasnot been visited yet:
             visit v
             push all adjacent nodes onto stack (in reverse 
             lexicographical order)
 ```
 
 The depth-first search can also be implemented using a recursive function.
-```{.default}
+```java
 Depth-first Traversal:
     for each vertex, v, in the graph
         if v is not visited
@@ -93,7 +93,7 @@ $$1, 2, 6, 8, 3, 4, 7, 9, 5.$$
 ![](images\10 (2).svg){ width=500px }
 
 
-::: {.callout}
+:::{.callout-important title="Activity" collapse="true" icon=false}
 See if you can come up with the order of visitation of the graph 
 below with a depth-first search.
 
@@ -104,7 +104,7 @@ below with a depth-first search.
 
 ## Breadth-first traversal
 The second alternative to traversing a graph is to visit all adjacent vertices first before going any deeper. In this approach, we want to stay as close as possible to the starting point. This traversal algorithm can be implemented using a queue.
-```{.default}
+```java
 Breadth-first Traversal:
     create queue Q
     enqueue source vertex
@@ -122,7 +122,7 @@ is
 
 |                          1, 2, 3, 4, 5, 6, 7, 8, 9
 
-::: {.callout}
+:::{.callout-important title="Activity" collapse="true" icon=false}
 See if you can come up with the order of visitation of the graph 
 below with a breadth-first search.
 
@@ -142,14 +142,14 @@ More commonly, however, this is applied to weighted graphs, in which case the ed
 
 Starting at the source vertex, we visit it and then identify the edge with the lowestweight connected to a node that we've already visited. We add this edge to the MST and progress until we have visited all nodes.
 
-![](images\10 (4).png){ width=500px }
+![](images\10 (4).png){fig-align="center" width=500px }
 
 Remember we always add the edge, connected to what we have already 
 identified, that the lowest weight.
 
-::: {.callout}
+::: {.callout-important title="Activity" collapse="true" icon=false}
 See if you can get the minimum spanning tree for the graph below.
 
-![](images\10 (4).svg){ width=200px }
-![](images\10 (5).svg){ width=200px }
+![](images\10 (4).svg){ width=250px }
+![](images\10 (5).svg){ width=250px }
 :::

@@ -49,7 +49,7 @@ An algorithm that finds a solution to a problem by reducing it to smaller versio
 current call.
 
 Let's see what the factorial algorithm defined above would look like as a recursive function.
-```{.default}
+```java
 int fact(int num)
 {
     if (num == 0)
@@ -68,15 +68,15 @@ To design a recursive function, you must do the following:
 - Identify the general case and a solution to it which utilizes a   smaller version of itself.
 
 
-::: {.callout}
+::: {.callout-important title="Activity" collapse="true" icon=false}
 Write a recursive function to evaluate the exponent of one integer. 
 Its signature is given below:
-```{.default}
+```java
 int pow(int x, int n)    //It should return xn.
 ```
 :::
 
-::: {.callout}
+::: {.callout-important title="Activity" collapse="true" icon=false}
 Write a recursive function to return the nth fibonacci number.
 
 The fibonacci sequence can be represented using the following 
@@ -92,7 +92,7 @@ Fib(n) =0                   if n = 0;
 For most cases, one can write either a recursive or normal iterative function to solve a task. There are however cases where the recursive approach is significantly easier.
 
 Let's look at traversing a linked list from a previous lecture. The code that was provided in that lecture looked like the one below.
-```{.default}
+```java
 void Traverse(Node n)
 {
     while (n != NULL)
@@ -108,7 +108,7 @@ Traverse(head);
 ```
 
 A function to traverse the list could be written in a recursive manner as well.
-```{.default}
+```java
 void Traverse(Node n)
 {
     if (n == NULL)
@@ -118,10 +118,9 @@ void Traverse(Node n)
 }
 ```
 
-
 As you can see, the base case is when the list is null in which case we return nothing. Otherwise, we output the data portion of the node in which we are, and then call the same function starting at the next node in the sequence. Notice that in the iterative approach, once we move on to the next node, there is no way to get back since our variable n would have changed. However, in the recursive approach, since the function calls a copy of itself which has access to the next node, we technically still have access to the entire list. Recall that the function will not terminate until all function calls under it have been terminated. This means that we will have multiple copies of the Traverse function, each of which will have access to the list at the same time (even though we are only in one function at a time, and all the rest are kinda “on pause”). We can take advantage of this feature to print the list backward starting with the tail. To do this, we just make sure to do any processing of the nodes (such as the printing), on the way back from the base case. We do this by reversing the order of the processing and recursive call.
 
-```{.default}
+```java
 void Traverse(Node n)
 {
     if (n == NULL)
@@ -136,7 +135,7 @@ The towers of Hanoi is probably the most famous example of a problem that would 
 
 I will not go into too much detail about this game and or topic given that it was covered in CSC/CYEN 131.
 
-```{.default}
+```java
 void Hanoi(int n, char from, char to, char spare)
 {
     if (n == 1)
@@ -151,7 +150,7 @@ void Hanoi(int n, char from, char to, char spare)
 
 ```
 
-::: {.callout}
+::: {.callout-important title="Activity" collapse="true" icon=false}
 So how many moves are required for 5 disks? 10 disks? What about 64 disks? The origin story about towers of Hanoi says that some priests have been solving a 64 disktower of Hanoi problem and that the world will end when they finally do. If moving each disk took only 1 second, what s the shortest time it would it take to solve the '
 64 disk problem?
 :::

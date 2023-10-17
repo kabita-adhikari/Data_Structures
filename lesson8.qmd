@@ -13,7 +13,8 @@ We covered a few sorting algorithms in Chapter 2 i.e. bubble sort, selection sor
 We are now going to discuss a few more sorting algorithms that, while more complicated to understand and code, have better performance particularly in larger arrays.
 
 
-::: {.callout}
+::: {.callout-note}
+##
 Remember that all these sorting algorithms are designed to sort ”things” and we are just using numbers (integers) for simplicity. The same rationale in the sorting algorithms can be used for any other data type (basic, complex, or abstract) as long as you identify what >, <, and == mean.
 :::
 

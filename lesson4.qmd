@@ -40,7 +40,7 @@ One of the most common uses of stacks in a computer is in keeping track of the f
 
 Another example of stack use is in reversing words. If the letters of the word are pushed onto a stack in the order in which they are encountered, then they can be popped of in the reverse order.
 
-```{.default}
+```java
 push R          //in what order will the word “RACECAR” be popped after being 
 push A          //pushed onto a stack?
 push C
@@ -146,12 +146,13 @@ To convert from infix to postfix, we have to remember that:
 
 
 It might be simple to see how to get from infix to postfix with short expressions but it gets complicated real quick with longer expressions. I suggest grouping and numbering different operations in order to guide you in converting from infix to postfix.
+
 ![](images/lesson4.png) 
 
 ## Evaluating postfix expressions.
 As we mentioned earlier, we use a stack to evaluate postfix expressions. But how exactly? We go through the postfix expression from left to right. If we encounter an operand, we push it onto the stack. However, If we encounter an operator, we pop the top two items from the stack, evaluate it, and push the result back onto the stack.
 
-```{.default}
+```java
 a = Pop();
 b = Pop();
 Push(eval(a, b));
@@ -218,7 +219,7 @@ We shall use it to convert a few examples of expressions and hopefully it'll bec
 The expression that we will convert is 
 ```3 * 4 - ( 7 – 8 / 2 )```
 
-```{.default}
+```java
     infixQ ← infix expression
     postfixQ ← empty queue
     operS ← empty stack

@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="deletion" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="deletion"><span class="header-section-number">2</span> Deletion</h2>
-<p>Deleting an item from a list is slightly more involved. We first have to search for the item that we have to delete, delete it, and then shift the remaining elements to cover up the space we just freed up. Its complexity is <span class="math inline">\(O(n)\)</span> because the process grows linearly with the size of data that you are dealing with. On average, we’ll compare <span class="math inline">\(n/2\)</span> items, and shift <span class="math inline">\(n/2\)</span> items to the left.</p>
+<p>Deleting an item from a list is slightly more involved. We first have to search for the item that we have to delete, delete it, and then shift the remaining elements to cover up the space we just freed up. Its complexity is <span class="math inline">\(O(n)\)</span> because the process grows linearly with the size of data that you are dealing with. On average, we’ll compare <span class="math inline">\(\frac{n}{2}\)</span> items, and shift <span class="math inline">\(\frac{n}{2}\)</span> items to the left.</p>
 </section>
 <section id="searching" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="searching"><span class="header-section-number">3</span> Searching</h2>
@@ -167,72 +167,84 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    return -1;</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So what about the performance of this search? Imagine our list has 1000 items. If the item we are searching for is near the front, the search will be fast, but if its near the end of the list, the search will be long.</p>
-<p>Its complexity is <span class="math inline">\(O(n)\)</span>. On average, we’ll compare <span class="math inline">\(n/2\)</span> items.</p>
+<p>Its complexity is <span class="math inline">\(O(n)\)</span>. On average, we’ll compare <span class="math inline">\(\frac{n}{2}\)</span> items.</p>
 <p>So how can it be improved? Well if the list was ordered, then we wouldn’t have to search all the way to the end to figure out that the key we were searching for wasn’t in the list. We would know that a key isn’t in the list as soon as we found value larger (or smaller…depending on how your list is ordered) than the key we were looking for.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>//Ordered Sequential/Linear Search</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Ordered Sequential/Linear Search</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>int OrderedLinearSearch(int [] list, int item)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    for(int i=0; i&lt;list.length; i++)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        if(list[i] == item)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            return i;</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        if(list[i] &gt; item)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            return -1;</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    return -1;</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="fu">OrderedLinearSearch</span><span class="op">(</span><span class="dt">int</span> <span class="op">[]</span> list<span class="op">,</span> <span class="dt">int</span> item<span class="op">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span>list<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>list<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> item<span class="op">)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>list<span class="op">[</span>i<span class="op">]</span> <span class="op">&gt;</span> item<span class="op">)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If the list was ordered, we could also employ a binary search which is a slightly more complicated algorithm but would perform much faster.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>//Binary Search</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Binary Search</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>int BinarySearch(int [] list, int item)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    int first = 0;</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    int last = list.length -1;</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    int mid;</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    while(first &lt;= last)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        mid = (first + last) / 2;</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        if(list[mid] == item)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            return mid;</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        if(list[mid] &gt; item)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            last = mid – 1;</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        else</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            first = mid + 1;</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    return -1;</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>What is the complexity for a binary search? <span class="math inline">\(O(log n)\)</span>. Just so you remember, the division to find the mid is integer division. For example, if the list had 100 elements (indices 0 to 99), then mid would evaluate to <span class="math inline">\(99/2=49\)</span>.</p>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="fu">BinarySearch</span><span class="op">(</span><span class="dt">int</span> <span class="op">[]</span> list<span class="op">,</span> <span class="dt">int</span> item<span class="op">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> first <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> last <span class="op">=</span> list<span class="op">.</span><span class="fu">length</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> mid<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(</span>first <span class="op">&lt;=</span> last<span class="op">)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        mid <span class="op">=</span> <span class="op">(</span>first <span class="op">+</span> last<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>list<span class="op">[</span>mid<span class="op">]</span> <span class="op">==</span> item<span class="op">)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> mid<span class="op">;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>list<span class="op">[</span>mid<span class="op">]</span> <span class="op">&gt;</span> item<span class="op">)</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            last <span class="op">=</span> mid – <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            first <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>What is the complexity for a binary search? <span class="math inline">\(O(log n)\)</span>. Just so you remember, the division to find the mid is integer division. For example, if the list had 100 elements (indices 0 to 99), then mid would evaluate to <span class="math inline">\(\frac{99}{2} =49\)</span></p>
 </section>
 <section id="sorting" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="sorting"><span class="header-section-number">4</span> Sorting</h2>
 <p>Another common operation for lists is sorting them. Why? Did you see how much faster a binary search is than a sequential search? If you are going to be doing a lot of searching on your list, it makes sense to sort them at the beginning so that you can save on time when it comes to searching.Alternatively, if you are going to be doing very little searching in your list, then maybe sorting would take up too much time.</p>
 <p>So how do we sort? Its very easy for us as humans to do with small data sizes because we can see multiple pieces of data at the same time, do loads of comparisons in a short time, etc. But what about a computer? Is there a way that we can design an algorithm to sort the data in a sequence of steps that will always work regardless of how the data looks in the first place?</p>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Let’s see if you can sort the provided playing cards in non-descending order. Now can you figure out a sequence of steps to describe the process you just went through? A sequence that will always work?</p>
+</div>
+</div>
 <section id="bubble-sort" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="bubble-sort"><span class="header-section-number">4.1</span> Bubble Sort</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>//Bubble Sort</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Bubble Sort</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>void BubbleSort(int [] list)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    for(int i=1; i&lt;list.length; i++)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        for(int j=1; j&lt;list.length-i+1; j++)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            if(list[j] &lt; list[j-1])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                int temp = list[j];</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                list[j] = list[j-1];</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                list[j-1] = temp;</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="fu">BubbleSort</span><span class="op">(</span><span class="dt">int</span> <span class="op">[]</span> list<span class="op">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">1</span><span class="op">;</span> i<span class="op">&lt;</span>list<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> j<span class="op">=</span><span class="dv">1</span><span class="op">;</span> j<span class="op">&lt;</span>list<span class="op">.</span><span class="fu">length</span><span class="op">-</span>i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span><span class="op">(</span>list<span class="op">[</span>j<span class="op">]</span> <span class="op">&lt;</span> list<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">])</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                <span class="dt">int</span> temp <span class="op">=</span> list<span class="op">[</span>j<span class="op">];</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                list<span class="op">[</span>j<span class="op">]</span> <span class="op">=</span> list<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                list<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> temp<span class="op">;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s assume that we want to sort the list in increasing order. Bubble sort works by making successive swaps in such a way as to move the largest element to the endof the array. That way the larger values “bubble” to the end of the array.</p>
 <p>The inner loop affects a single <strong>pass</strong> through the list, and controls how many comparisons are carried out in each pass.</p>
 <p>The outer loop controls the number of <strong>passes</strong> through the array.</p>
 <p>To sort a list of <span class="math inline">\(n\)</span> elements, this algorithm will take <span class="math inline">\(n-1\)</span> passes.</p>
-<p>In each pass, it will make between <span class="math inline">\(n-1\)</span> and comparisons. This totals up to <span class="math inline">\(n(n−1)/2\)</span> comparisons. On average, only half of those comparisons will result in a swap, i.e.&nbsp;<span class="math inline">\(n(n−1)/4\)</span> swaps. This means that for a list of 1000 elements, bubble sort would require about 500,000 comparisons, and 250,000 swaps on average. This represents a complexity of <span class="math inline">\(O(n^2)\)</span>.</p>
+<p>In each pass, it will make between <span class="math inline">\(n-1\)</span> and comparisons. This totals up to <span class="math inline">\(\frac{n(n−1)}{2}\)</span> comparisons. On average, only half of those comparisons will result in a swap, i.e.&nbsp;<span class="math inline">\(\frac{n(n−1)}{4}\)</span> swaps. This means that for a list of 1000 elements, bubble sort would require about 500,000 comparisons, and 250,000 swaps on average. This represents a complexity of <span class="math inline">\(O(n^2)\)</span>.</p>
 <table class="table">
 <colgroup>
 <col style="width: 25%">
@@ -282,48 +294,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>One of the weaknesses with the bubble sort is that even if the input is already sorted, it will still go through all the passes before ending.Fortunately, there is a way to make it optimized.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>//Optimized Bubble Sort</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Optimized Bubble Sort</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>void OptimizedBubbleSort(int [] list)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    boolean swapMade;</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    for(int i=1; i&lt;list.length; i++)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        swapMade = false;</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        for(int j=1; j&lt;list.length-i+1; j++)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            if(list[j] &lt; list[j-1])</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                int temp = list[j];</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                list[j] = list[j-1];</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                list[j-1] = temp;</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                swapMade = true;</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        if(!swapMade)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            break;</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="fu">OptimizedBubbleSort</span><span class="op">(</span><span class="dt">int</span> <span class="op">[]</span> list<span class="op">)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">boolean</span> swapMade<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">1</span><span class="op">;</span> i<span class="op">&lt;</span>list<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        swapMade <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> j<span class="op">=</span><span class="dv">1</span><span class="op">;</span> j<span class="op">&lt;</span>list<span class="op">.</span><span class="fu">length</span><span class="op">-</span>i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span><span class="op">(</span>list<span class="op">[</span>j<span class="op">]</span> <span class="op">&lt;</span> list<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">])</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                <span class="dt">int</span> temp <span class="op">=</span> list<span class="op">[</span>j<span class="op">];</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                list<span class="op">[</span>j<span class="op">]</span> <span class="op">=</span> list<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                list<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> temp<span class="op">;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                swapMade <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(!</span>swapMade<span class="op">)</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="selection-sort" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="selection-sort"><span class="header-section-number">4.2</span> Selection Sort</h3>
 <p>Selection sort works by identifying the smallest element in the list, and placing it in the first position (using a single swap). It then starts at the second position and finds the next-smallest item and places it in the second position (also using a single swap). It does this process repeatedly: finding the smallest item in the unsorted part of the list, and placing it in its proper position in the sorted part of the list. The left side of the list is the sorted part, and the right hand side is the unsorted part.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>//Selection Sort</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Selection Sort</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>void SelectionSort(int [] list)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    for(int i=0; i&lt;list.length-1; i++)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        int minIndex = i;</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        for(int j=i+1; j&lt;list.length; j++)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            if(list[j] &lt; list[minIndex])</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                minIndex = j;</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        int temp = list[i];</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        list[i] = list[minIndex];</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        list[minIndex] = temp;</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>On average, for a list of size n, it still requires $ n(n−1)/2 $ comparisons, but only <span class="math inline">\((n−1)\)</span> swaps which is considerably less than the bubble sort that we looked at earlier. For example, a list of 1000 elements would require approximately 500,000 key comparisons, but only 1000 swaps.</p>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="fu">SelectionSort</span><span class="op">(</span><span class="dt">int</span> <span class="op">[]</span> list<span class="op">)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span>list<span class="op">.</span><span class="fu">length</span><span class="op">-</span><span class="dv">1</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> minIndex <span class="op">=</span> i<span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> j<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span><span class="op">;</span> j<span class="op">&lt;</span>list<span class="op">.</span><span class="fu">length</span><span class="op">;</span> j<span class="op">++)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span><span class="op">(</span>list<span class="op">[</span>j<span class="op">]</span> <span class="op">&lt;</span> list<span class="op">[</span>minIndex<span class="op">])</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                minIndex <span class="op">=</span> j<span class="op">;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> temp <span class="op">=</span> list<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        list<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> list<span class="op">[</span>minIndex<span class="op">];</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        list<span class="op">[</span>minIndex<span class="op">]</span> <span class="op">=</span> temp<span class="op">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On average, for a list of size n, it still requires <span class="math inline">\(\frac{n(n−1)}{2}\)</span> comparisons, but only <span class="math inline">\((n−1)\)</span> swaps which is considerably less than the bubble sort that we looked at earlier. For example, a list of 1000 elements would require approximately 500,000 key comparisons, but only 1000 swaps.</p>
 <p>Its complexity is still <span class="math inline">\(O(n^2)\)</span>.</p>
 <p>Its useful with small amounts of data, in particular when swapping is time consuming.</p>
 <table class="table">
@@ -366,22 +378,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="insertion-sort" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="insertion-sort"><span class="header-section-number">4.3</span> Insertion Sort</h3>
 <p>Insertion sort is the kind of sorting that we typically use as humans. We assume that the first part of the list is sorted, and the latter part is unsorted. We then move one item at a time from the unsorted part to the sorted part making sore to put it in its right position in order to maintain the “sortedness” of the sorted part.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>//Insertion Sort</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">//Insertion Sort</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>void InsertionSort(int [] list)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    for(int i=1; i&lt;list.length; i++)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        if(list[i] &lt; list[i-1])</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            int j, temp = list[i];</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            for(j=i-1; j&gt;=0 &amp;&amp; list[j]&gt;temp; j--)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                list[j+1] = list[j];</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            list[j+1] = temp;</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>On average, for a list of size n, it takes <span class="math inline">\(n(n−1)/2\)</span> comparisons, and <span class="math inline">\(n(n−1)/4\)</span> swaps which amounts to a complexity of <span class="math inline">\(O(n^2)\)</span>. However, with an almost sorted list, it takes almost <span class="math inline">\(O(n)\)</span>. This means that it is the best algorithm to use for an almost sorted list.</p>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="fu">InsertionSort</span><span class="op">(</span><span class="dt">int</span> <span class="op">[]</span> list<span class="op">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">1</span><span class="op">;</span> i<span class="op">&lt;</span>list<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>list<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;</span> list<span class="op">[</span>i<span class="op">-</span><span class="dv">1</span><span class="op">])</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> j<span class="op">,</span> temp <span class="op">=</span> list<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span><span class="op">(</span>j<span class="op">=</span>i<span class="op">-</span><span class="dv">1</span><span class="op">;</span> j<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> list<span class="op">[</span>j<span class="op">]&gt;</span>temp<span class="op">;</span> j<span class="op">--)</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                list<span class="op">[</span>j<span class="op">+</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> list<span class="op">[</span>j<span class="op">];</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            list<span class="op">[</span>j<span class="op">+</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> temp<span class="op">;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On average, for a list of size n, it takes <span class="math inline">\(\frac{n(n−1)}{2}\)</span> comparisons, and <span class="math inline">\(\frac{n(n−1)}{4}\)</span> swaps which amounts to a complexity of <span class="math inline">\(O(n^2)\)</span>. However, with an almost sorted list, it takes almost <span class="math inline">\(O(n)\)</span>. This means that it is the best algorithm to use for an almost sorted list.</p>
 <table class="table">
 <colgroup>
 <col style="width: 25%">
@@ -435,8 +447,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Select: on each pass, smallest item in unsorted side moves to beginning of unsorted side. Requires few swaps, but many comparisons.</li>
 <li>Insertion: on each pass, first item in unsorted side moves to its proper place in sorted side. Some swaps, some comparisons.</li>
 </ul></li>
-<li>Sequential search on an ordered list can abort search early if current element is greater than the key we are searching for. On average, it takes <span class="math inline">\(n/2\)</span> key comparisons but is a bit better than sequential search on an un-ordered list. On the down side, insertion into an ordered list is more costly. Complexity of a sequential search is <span class="math inline">\(O(n)\)</span>.</li>
-<li>Binary search can only be used when the list is sorted. It uses a divide and conquer technique. It is usually applied to array based lists since its easy to find the middle element <span class="math inline">\((first+last)/2\)</span>. If the middle element is what we are searching for, then we’re done. If its less than what we are searching for, we search in the list to the right, otherwise, we search in the list to the left. We keep on repeating this process till we find the key (or don’t find it). Complexity of binary search is <span class="math inline">\(O(lg n)\)</span>.</li>
+<li>Sequential search on an ordered list can abort search early if current element is greater than the key we are searching for. On average, it takes <span class="math inline">\(\frac{n}{2}\)</span> key comparisons but is a bit better than sequential search on an un-ordered list. On the down side, insertion into an ordered list is more costly. Complexity of a sequential search is <span class="math inline">\(O(n)\)</span>.</li>
+<li>Binary search can only be used when the list is sorted. It uses a divide and conquer technique. It is usually applied to array based lists since its easy to find the middle element <span class="math inline">\((\frac{first+last}{2})\)</span> . If the middle element is what we are searching for, then we’re done. If its less than what we are searching for, we search in the list to the right, otherwise, we search in the list to the left. We keep on repeating this process till we find the key (or don’t find it). Complexity of binary search is <span class="math inline">\(O(lg n)\)</span>.</li>
 </ul>
 
 

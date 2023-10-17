@@ -152,14 +152,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>The field of graph theory can be traced to a problem that was posed in 1736 in the town that was called Konigsberg. The town had a river flowing around two islands in such a way as to produce four different areas of land. Those four pieces of land were connected by 7 bridges as shown in the figure below.</p>
-<p><img src="images\10 (1).JPG" class="img-fluid" width="500"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\10 (1).JPG" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
 <p>The konigsberg problem is: Starting at one land area, is it possible to walk across all the bridges exactly once and return to the starting land area?</p>
 <section id="terminology" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="terminology"><span class="header-section-number">1.1</span> Terminology</h2>
 <p>A graph is made up of vertices and edges (where vertices are analogous to nodes in a tree), and each edge is bounded by two vertices. The vertices represent some information, and the edges represent some form of relationship between the vertices. Two nodes are said to be adjacent if they are connected byan edge. The vertices adjacent to a given vertex are said to be that’s vertex’s neighbors. A path between any two vertices is a sequence of edges that lead from the first vertex to the second. A graph is called connected if there is at leastone path from every vertex to every other vertex. In contrast, a non-connected graph could consist of several connected components.</p>
-<p><img src="images\10 (1).png" class="img-fluid" width="500"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\10 (1).png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
 <p>A graph can be <strong>directed</strong> or <strong>undirected</strong> with the distinction being whether the edges have a direction associated with them or not. In some situations, we’d like to have some form of <strong>weight</strong> associated with the edges. In those cases, the graph is referred to as a <strong>weighted graph</strong>. The weight of the edge could represent physical distance or time cost between the two vertices.</p>
-<p><img src="images\10 (2).png" class="img-fluid" width="500"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\10 (2).png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
 <p>The figure above shows a connected and non-connected graph side by side.</p>
 </section>
 </section>
@@ -169,13 +181,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="adjacency-matrix" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="adjacency-matrix"><span class="header-section-number">2.1</span> Adjacency matrix</h2>
 <p>For a graph of n vertices, an adjacency matrix is an n x n matrix filled with 0’s and 1’s. A 1 at row 4 and column 5 means that there is an edge between the fourth and fifth vertex, while a 0 means that those two vertices are not directly connected. For example the graph at the top of this page can be represented by the adjacency matrix below.</p>
-<p><img src="images\10 (3).png" class="img-fluid" width="500"></p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\10 (3).png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>See if you can come up with the adjacency matrices for the two other graphs on the previous page.</p>
 </div>
 </div>
@@ -185,14 +207,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="adjacency-list" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="adjacency-list"><span class="header-section-number">2.2</span> Adjacency list</h2>
 <p>The adjacency list is another way of representing a graph in memory. Each vertex is represented by its own linked list which consists of vertices that it is connected to. We can store the heads of those n linked lists in an array of size n.</p>
-<p><img src="images\10 (1).svg" class="img-fluid" width="500"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\10 (1).svg" class="img-fluid figure-img" width="300"></p>
+</figure>
+</div>
 <p>The figure above shows the adjacency list representation of the first graph we looked at.</p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>See if you can come up with the adjacency lists for the two other graphs on page 2.</p>
 </div>
 </div>
@@ -206,29 +238,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="depth-first-traversal" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="depth-first-traversal"><span class="header-section-number">3.1</span> Depth-first traversal</h2>
 <p>The idea behind depth-first is to travel as far away from the source vertex as quickly as possible and only back up when you reach a dead end. Interestingly, this approach can be implemented using a stack. We store the possible vertices tobe visited on a stack, and we put the visited vertices in a queue so that we know the exact order in which we visited them.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Depth-first Traversal:</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Depth<span class="op">-</span>first Traversal<span class="op">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    push source vertex onto stack</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    while stack is not empty:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        v = stack.pop()</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        if v hasn't been visited yet:</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> stack is not empty<span class="op">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> stack<span class="op">.</span><span class="fu">pop</span><span class="op">()</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> v hasnot been visited yet<span class="op">:</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            visit v</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            push all adjacent nodes onto stack (in reverse </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            lexicographical order)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            push all adjacent nodes onto <span class="fu">stack</span> <span class="op">(</span>in reverse </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            lexicographical order<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The depth-first search can also be implemented using a recursive function.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Depth-first Traversal:</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    for each vertex, v, in the graph</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        if v is not visited</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            visit v.</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            start Depth-first Traversal at v.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Depth<span class="op">-</span>first Traversal<span class="op">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> each vertex<span class="op">,</span> v<span class="op">,</span> in the graph</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> v is not visited</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            visit v<span class="op">.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">start</span> Depth<span class="op">-</span>first Traversal at v<span class="op">.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In general, depth-first is just go as deep as you can, then back up when you get to an already visited node or a dead end.</p>
 <p>For example, the order of visitation for the graph below would be <span class="math display">\[1, 2, 6, 8, 3, 4, 7, 9, 5.\]</span></p>
 <p><img src="images\10 (2).svg" class="img-fluid" width="500"></p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>See if you can come up with the order of visitation of the graph below with a depth-first search.</p>
 <p><img src="images\10 (3).svg" class="img-fluid" width="500"></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0, 1, 4, 3, 2, 5, 7, 8, 6, 9.</p>
@@ -239,23 +277,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="breadth-first-traversal" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="breadth-first-traversal"><span class="header-section-number">3.2</span> Breadth-first traversal</h2>
 <p>The second alternative to traversing a graph is to visit all adjacent vertices first before going any deeper. In this approach, we want to stay as close as possible to the starting point. This traversal algorithm can be implemented using a queue.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Breadth-first Traversal:</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Breadth<span class="op">-</span>first Traversal<span class="op">:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    create queue Q</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    enqueue source vertex</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    while Q is not empty:</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        v = Q.dequeue();</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        visit v.</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        enqueue all adjacent vertices that haven't been visited yet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> Q is not empty<span class="op">:</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> Q<span class="op">.</span><span class="fu">dequeue</span><span class="op">();</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        visit v<span class="op">.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">enqueue</span> all adjacent vertices that haven<span class="er">'</span>t been visited yet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Given the algorithm above, the traversal for the graph below</p>
 <p><img src="images\10 (2).svg" class="img-fluid" width="500"></p>
 <p>is</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1, 2, 3, 4, 5, 6, 7, 8, 9</p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>See if you can come up with the order of visitation of the graph below with a breadth-first search.</p>
 <p><img src="images\10 (3).svg" class="img-fluid" width="500"></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0, 1, 3, 4, 2, 5, 7, 8, 6, 9</p>
@@ -270,16 +314,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>There are multiple spanning trees that can be gotten from a given graph, but we are only really interested in the minimum spanning tree, which is the spanning tree with the lowest cost. With an unweighted graph, this just means the tree with the minimum number of edges required to visit all nodes in the graph.</p>
 <p>More commonly, however, this is applied to weighted graphs, in which case the edge weights are a representative of the cost of that edge, and a minimum spanning tree should have the lowest weight and yet still connect all edges.</p>
 <p>Starting at the source vertex, we visit it and then identify the edge with the lowestweight connected to a node that we’ve already visited. We add this edge to the MST and progress until we have visited all nodes.</p>
-<p><img src="images\10 (4).png" class="img-fluid" width="500"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\10 (4).png" class="img-fluid figure-img" width="500"></p>
+</figure>
+</div>
 <p>Remember we always add the edge, connected to what we have already identified, that the lowest weight.</p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>See if you can get the minimum spanning tree for the graph below.</p>
-<p><img src="images\10 (4).svg" class="img-fluid" width="200"> <img src="images\10 (5).svg" class="img-fluid" width="200"></p>
+<p><img src="images\10 (4).svg" class="img-fluid" width="250"> <img src="images\10 (5).svg" class="img-fluid" width="250"></p>
 </div>
 </div>
 </div>

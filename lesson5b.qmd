@@ -15,7 +15,7 @@ to code duplication.
 # Generics: The case for
 Imagine a very simple situation where you have to design a function that printed out the elements of an array that it received as an argument. Your first attempt might look something like this.
 
-```{.default}
+```java
 public static void printArray(int [] arr)
 {
     for (int i = 0; i < arr.length; i++)
@@ -26,7 +26,7 @@ public static void printArray(int [] arr)
 
 Which is a very good attempt...until you realise that the function calling the printArr function will not always send you an integer array
 
-```{.default}
+```java
 public static void main(String [] args)
 {
     int [] x = {1, 2, 3, 4, 5, 6, 7};
@@ -42,7 +42,7 @@ public static void main(String [] args)
 Your first attempt to resolve this issue could be overloading the printArr function (i.e. creating another printArr func
 tion that has a different signature just to deal with the doubles).
 
-```{.default}
+```java
 public static void printArray(int [] arr)
 {
     for (int i = 0; i < arr.length; i++)
@@ -73,7 +73,7 @@ Designing methods to deal with generics requires a few changes from our typical 
 
 4. The body of the function looks very similar to a normal function body. Keep in mind that the identifier name is used instead of the more restrictive type. These types can only be used as place holders for types that are passed by reference and not by value. This means that it won’t work for primitive types such as int, char, double, but it will work for object types such as Integer, Character, Double, or any objects from classes that we have designed ourselves.
 
-```{.default}
+```java
 public static <mytype> void printArray(mytype [] arr)
 {
     for (int i = 0; i < arr.length; i++)
@@ -98,7 +98,7 @@ For this to work, the parameter type section has to be included in the class def
 
 When the objects are being declared, the actual data type has to be used.
 
-```{.default}
+```java
 class Node<mytype>
 {
     private mytype data;
@@ -123,7 +123,7 @@ class NodeTest
     }
 }
 ```
-::: {.callout}
+::: {.callout-important title="Activity" collapse="true" icon=false}
 demo with examples of generic methods and classes.
 Make sure to show and interpret the error messages that are shown as a result.
 :::
@@ -131,7 +131,7 @@ Make sure to show and interpret the error messages that are shown as a result.
 # Bounded type parameters
 Sometimes the flexibility afforded by generic types is too much and you want to limit it a little i.e. allow only some types but not every single type. In this case, you adjust the type parameter from just having an identifier name, but also the **extends** keyword followed by an upper bound. This upper bound can be a super class or interface that all the types you actually want to allow belong to.
 
-```{.default}
+```java
 public static <mytype extends Number> mytype getMax(mytype a, mytype b)
 {
     if (a.floatValue() > b.floatValue())

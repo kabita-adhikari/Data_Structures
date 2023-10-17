@@ -171,12 +171,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <strong>level</strong> of a node in a binary tree is the number of branches on the path from the root to that node. For example, node F is at level 2. Notice that the levels count downwards.</p>
 <p>The <strong>height</strong> of a tree is the number of nodes on the longest path from the root to a leaf. In the diagram above, the height of the tree is 4. Notice that for length and level we count edges, but for height, we count nodes.</p>
 <p>From the description thus far, it stands to reason that the implementation of a node of a binary tree is very similar to the node of a linked list. However, instead of just keeping track of the link to the next node, it must keep track of both its leftand right children.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>class TreeNode // missing accessors, mutators, constructor, etc.</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    private int data;</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    private TreeNode left;</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    private TreeNode right;</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="bu">TreeNode</span> <span class="co">// missing accessors, mutators, constructor, etc.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> data<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">TreeNode</span> left<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="bu">TreeNode</span> right<span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The data is stored in the member called <em>data</em>. The left subtree is pointed to by <em>left</em>, and the right subtree is pointed to by <em>right</em>.</p>
 <p>We can have a reference to the first <em>TreeNode</em> that we can call <em>root</em> to keep track of the root of the tree.</p>
 </section>
@@ -195,31 +195,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Postorder traversal (traverse the left subtree, then the right subtree, and then visit the node) a.k.a. LRN.</li>
 </ul>
 <p>It should be easy to see that these traversal algorithms are recursive. (remember recursion from Chapter 12) Lets look at an easy example of an inorder traversal to print out the data in each node.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>void InOrder(TreeNode n)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    if (n != null)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        InOrder(n.getLeft());</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        System.out.print(n.getData() + “ “);</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        InOrder(n.getRight());</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="sourceCode" id="cb2"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="fu">InOrder</span><span class="op">(</span><span class="bu">TreeNode</span> n<span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">InOrder</span><span class="op">(</span>n<span class="op">.</span><span class="fu">getLeft</span><span class="op">());</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">print</span><span class="op">(</span>n<span class="op">.</span><span class="fu">getData</span><span class="op">()</span> <span class="op">+</span> “ “<span class="op">);</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">InOrder</span><span class="op">(</span>n<span class="op">.</span><span class="fu">getRight</span><span class="op">());</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Let’s see if you can come up with the PreOrder and PostOrder traversal algorithms. Given how the InOrder looks above, coming up with the remaining two traversals should be trivial.</p>
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>What would the inorder, preorder, and postorder traversals for the tree in the diagram on page 2 look like?</p>
 </div>
 </div>
@@ -256,60 +268,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/6 (4).svg" class="img-fluid figure-img" width="300"></p>
 </figure>
 </div>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Try and insert the following nodes to the tree above. <code>65, 68, 79</code></p>
-<p><img src="images/6 (5).svg" class="img-fluid" width="300"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/6 (5).svg" class="img-fluid figure-img" width="300"></p>
+</figure>
 </div>
 </div>
 </div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>/* </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> this function inserts the integer x into the tree in the appropriate position </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>*/ </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>TreeNode insert(int x, TreeNode root) </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>{ </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    TreeNode current, trail, newnode; //pointers to the current node, the node before </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    //the current (called trail), and a pointer to the </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    //new node that we will create from int x. </span>
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"> this function inserts the integer x into the tree in the appropriate position </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">TreeNode</span> <span class="fu">insert</span><span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="bu">TreeNode</span> root<span class="op">)</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">TreeNode</span> current<span class="op">,</span> trail<span class="op">,</span> newnode<span class="op">;</span> <span class="co">//pointers to the current node, the node before </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">//the current (called trail), and a pointer to the </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">//new node that we will create from int x. </span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    newnode = new TreeNode(); //create the new node and initialize it appropriately </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    newnode.setData(x);</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    newnode.setLeft(null);</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    newnode.setRight(null); </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    newnode <span class="op">=</span> <span class="kw">new</span> <span class="bu">TreeNode</span><span class="op">();</span> <span class="co">//create the new node and initialize it appropriately </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    newnode<span class="op">.</span><span class="fu">setData</span><span class="op">(</span>x<span class="op">);</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    newnode<span class="op">.</span><span class="fu">setLeft</span><span class="op">(</span><span class="kw">null</span><span class="op">);</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    newnode<span class="op">.</span><span class="fu">setRight</span><span class="op">(</span><span class="kw">null</span><span class="op">);</span> </span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    if (root == null) //if the root is null (i.e. no tree yet), </span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        root = newnode; //just set the root to the newnode </span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    else </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    { </span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        current = root; </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>root <span class="op">==</span> <span class="kw">null</span><span class="op">)</span> <span class="co">//if the root is null (i.e. no tree yet), </span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        root <span class="op">=</span> newnode<span class="op">;</span> <span class="co">//just set the root to the newnode </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span> </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        current <span class="op">=</span> root<span class="op">;</span> </span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        while (current != null) //this while loop will set trail to the current node and</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        {           //then move "current" to the appropriate subtree until</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                    //both current and trail are at the bottom of the tree </span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            trail = current; </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">(</span>current <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="co">//this while loop will set trail to the current node and</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span>           <span class="co">//then move "current" to the appropriate subtree until</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                    <span class="co">//both current and trail are at the bottom of the tree </span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            trail <span class="op">=</span> current<span class="op">;</span> </span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            if (current.getData() == x)         //we don't want duplicate values in our tree </span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            { </span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                System.out.println(“we don’t want duplicate values”);</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                return; </span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            } </span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            else if (current.getData() &gt; x)      //if x is less, move current to the left subtree </span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                current = current.getLeft(); </span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            else //otherwise, move current to the right subtree </span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                current = current.getRight(); </span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    //right now trail points to the last node before our insertion, and current is null. </span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    if (trail.getData() &gt; x) </span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        trail.setLeft(newnode); </span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    else </span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        trail.setRight(newnode); </span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    } </span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    return root;</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>current<span class="op">.</span><span class="fu">getData</span><span class="op">()</span> <span class="op">==</span> x<span class="op">)</span>         <span class="co">//we don't want duplicate values in our tree </span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span> </span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>“we don’t want duplicate values”<span class="op">);</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span><span class="op">;</span> </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>current<span class="op">.</span><span class="fu">getData</span><span class="op">()</span> <span class="op">&gt;</span> x<span class="op">)</span>      <span class="co">//if x is less, move current to the left subtree </span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                current <span class="op">=</span> current<span class="op">.</span><span class="fu">getLeft</span><span class="op">();</span> </span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span> <span class="co">//otherwise, move current to the right subtree </span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                current <span class="op">=</span> current<span class="op">.</span><span class="fu">getRight</span><span class="op">();</span> </span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">//right now trail points to the last node before our insertion, and current is null. </span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>trail<span class="op">.</span><span class="fu">getData</span><span class="op">()</span> <span class="op">&gt;</span> x<span class="op">)</span> </span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        trail<span class="op">.</span><span class="fu">setLeft</span><span class="op">(</span>newnode<span class="op">);</span> </span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> </span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        trail<span class="op">.</span><span class="fu">setRight</span><span class="op">(</span>newnode<span class="op">);</span> </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> </span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> root<span class="op">;</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="finding-the-min-and-max" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="finding-the-min-and-max"><span class="header-section-number">3.2</span> Finding the min and max</h2>
@@ -392,29 +414,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="printing-trees" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="printing-trees"><span class="header-section-number">4.1</span> Printing trees</h2>
 <p>Recursion provides a pretty nifty way of printing trees. They can be printed from right to left using the function below. In it, the variable lev refers to the number of tabs.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>void print(TreeNode n, int lev) </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>{ </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    if (n != null) </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    { </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        print(n.getRight(), lev+1);     //go down the right subtree and increase </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                                        //the number of tabs i'll have to make</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="fu">print</span><span class="op">(</span><span class="bu">TreeNode</span> n<span class="op">,</span> <span class="dt">int</span> lev<span class="op">)</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span><span class="op">(</span>n<span class="op">.</span><span class="fu">getRight</span><span class="op">(),</span> lev<span class="op">+</span><span class="dv">1</span><span class="op">);</span>     <span class="co">//go down the right subtree and increase </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                                        <span class="co">//the number of tabs i'll have to make</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        for (int i = 0; i &lt; lev; i++) </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            System.out.print("\t");     //print out the appropriate no. of tabs</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        System.out.println(n.getData());//and the data, and move to next line</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> lev<span class="op">;</span> i<span class="op">++)</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">print</span><span class="op">(</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span><span class="op">);</span>     <span class="co">//print out the appropriate no. of tabs</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>n<span class="op">.</span><span class="fu">getData</span><span class="op">());</span><span class="co">//and the data, and move to next line</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        print(n.getLeft(), lev+1);      //go down the left subtree and increase </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                                        //tabs</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    } </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span><span class="op">(</span>n<span class="op">.</span><span class="fu">getLeft</span><span class="op">(),</span> lev<span class="op">+</span><span class="dv">1</span><span class="op">);</span>      <span class="co">//go down the left subtree and increase </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                                        <span class="co">//tabs</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="recreating-a-tree-from-its-inorder-and-preorder-traversals" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="recreating-a-tree-from-its-inorder-and-preorder-traversals"><span class="header-section-number">4.2</span> Recreating a tree from its inOrder and preOrder traversals</h2>
 <p>The diagramatic representation of a tree can be recreated from its in order and preorder traversals.</p>
 <p>Remember that inorder is LNR i.e.&nbsp;visit the left subtree, then the node, then the right, whereas preorder is NLR i.e.&nbsp;visit the node first, then the left subtree and end with the right subtree.</p>
 <p>For example consider the two sequences below.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Inorder:  B C E F G H J K P R S X Z</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>preorder: J E B C G F H P K S R X Z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Inorder<span class="op">:</span>  B C E F G H J K P R S X Z</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>preorder<span class="op">:</span> J E B C G F H P K S R X Z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Preorder starts with the node so we know that J must be the root node. However, Inorder visits the left subtree before getting to the root so we can say that all the letters to the left of J must be in its left subtree i.e.&nbsp;B C E F G and H. Conversely, the right subtree of the root J consists of K P R S X and Z.</p>
 <p>Preorder says our next node (after the root J) is E. From in order, we see that the left subtree of E is B and C, while its right subtree is F, G, and H.</p>
 <p>Preorder dictates that our next node after E is B. The left subtree of B (acc. to the inorder) has nothing, but its right subtree has C (Recall that C is also in the left subtree of E which means that it is to the right of B but left of E).</p>

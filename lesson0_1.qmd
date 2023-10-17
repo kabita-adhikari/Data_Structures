@@ -98,7 +98,7 @@ programs that will crash less often when run. It is also easy to be used by more
 than one programmer when a team is working on a project together.
 
 ## Our first java program...again.
-``` { .default code-line-numbers="true"}
+``` java
 class Trial
 {
    public static void main(String [] args)
@@ -120,9 +120,11 @@ To execute the program, run the command:
         `java Trial` 
 </br>
 This should produce the appropriate/expected output to the terminal. If your java program contained multiple classes, then the compilation would produce multiple class files. To execute your program, you would run the command above using whichever class file contained the “main program.” So now let’s discuss the actual program. Even with something as small as this program, you should be able to notice a few differences from python. First off, everything in Java is in a class. There can’t be a statement, function, etc. that is not in a class. So even for a simple hello world, we have to make a class. Classes, functions, and code blocks in general are delineated by curly braces. They show where the code blocks start and end. In python, such blocks were marked by a uniform indentation. While indentation is HIGHLY encouraged in Java, it is not strictly enforced. Statements in java are ended using a semi-colon. Consider it the full stop or period of the java programming language. Without it, the compiler will assume that the next statement is just a continuation even if there are multiple spaces and or lines between them. The reason for this is that it is common in java to have statements that span multiple lines while that was very infrequent in python.Statements that you want to be executed should be put into functions/methods.You can have any number of functions in the class but there must be a main function. This function can be compared to the conductor of an orchestra. It is the function that the compiler will begin and end its execution with. The main function is in charge of determining which other functions will be executed if any at all. Interestingly, it doesn’t have to be at the top of the class but it being at the top of the class might help with readability of your code. The main program has a specific signature or name i.e.
-``` {.default}
+
+```java
 public static void main(String [] args)
 ```
+
 ::: {.callout-note}
 Memorize it because you will be writing it for every single Java program you write.
 :::
