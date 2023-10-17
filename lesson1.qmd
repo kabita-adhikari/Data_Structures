@@ -33,7 +33,7 @@ When your guests are at the table, another task on your to-do list is to pass th
 
 In fact, adding a constant subtask does not change its big-O. Making an announcement (which is O(1)) before passing round the hors d'oeuvres (O(n)) still remains O(n) because the runtime for the combined task will still be linear with respect to the number of guests invited. Making an announcement and then passing the dish around a table of 10 will still be about half as short as making an announcement and then passing the dish around a table of 20. This ignoring of less important factors is particularly difficult to wrap your mind around when the constant time factor is a big factor. For example, remodeling your kitchen (O(1)) and then passing the dish around is still in the same category as just passing the dish around even though the first one will take significantly longer. They are in the same category because as the size of the data increases (n), they respond in the same way i.e. linearly.
 
-Another task could be having every guest hug each other when they arrive. If there are just two guests, only one hug would be required. With 10 guests, 45 hugs would be required. With 50 guests, 1225 hugs. With 100 guests, 4950 guests. It is easy to tell that the runtime of this problem grows at a faster rate than the size of the problem i.e. the number of hugs becomes larger at a faster rate than that at which the number of guests grows. In fact, this problem falls in the **polynomial** category; more specifically the **quadratic** kind $O(n^2)$. This means that if the  nput data size doubles, the runtime will increase by a factor of 4. Again any multiplicative or smaller factors don’t matter in big-O. For example, if your task involved everyone hugging each other, then passing a dish around the table, as well as a speech at the beginning of the dinner, the whole task would be $O(n^2)$ because of all the subtasks, it is the $O(n^2)$ factor that will dominate the runtime of the algorithm (i.e. it is the task that will grow most significantly as the input data size increases). Recall that big-O is inexact. We are only trying to capture an expression that represents how its runtime will grow with an increasing data size. Imagine that your dinner guests got involved in a game that required you to stand them in order of height for a game. The sorting algorithms you are familiar with from the Living With Cyber series (e.g. bubble sort) would fall into the O(n2) family. Sorting a group of 100 people will take 100 times as long as sorting a group of 10 people even if the size of the group has only increased by a factor of 10. 
+Another task could be having every guest hug each other when they arrive. If there are just two guests, only one hug would be required. With 10 guests, 45 hugs would be required. With 50 guests, 1225 hugs. With 100 guests, 4950 guests. It is easy to tell that the runtime of this problem grows at a faster rate than the size of the problem i.e. the number of hugs becomes larger at a faster rate than that at which the number of guests grows. In fact, this problem falls in the **polynomial** category; more specifically the **quadratic** kind $O(n^2)$. This means that if the  nput data size doubles, the runtime will increase by a factor of 4. Again any multiplicative or smaller factors don’t matter in big-O. For example, if your task involved everyone hugging each other, then passing a dish around the table, as well as a speech at the beginning of the dinner, the whole task would be $O(n^2)$ because of all the subtasks, it is the $O(n^2)$ factor that will dominate the runtime of the algorithm (i.e. it is the task that will grow most significantly as the input data size increases). Recall that big-O is inexact. We are only trying to capture an expression that represents how its runtime will grow with an increasing data size. Imagine that your dinner guests got involved in a game that required you to stand them in order of height for a game. The sorting algorithms you are familiar with from the Living With Cyber series (e.g. bubble sort) would fall into the $O(n^2)$ family. Sorting a group of 100 people will take 100 times as long as sorting a group of 10 people even if the size of the group has only increased by a factor of 10. 
 
 Suppose that as dinner host, your roles involve having short conversations with not just everyone individually, but every possible grouping of your guests. For example with 3 guests, A, B and C. You have to have a conversation with A, B, C, AB, AC, BC, and ABC (i.e. 7 conversations). You don’t need to be an introvert to be daunted by such a task because it grows even faster than the quadratic category discussed earlier. With 4 guests (ABCD), you would need to have 15 conversations i.e. A, B, C, D, AB, AC, AD, BC, BD, CD, ABC, ABD, ACD, BCD, and ABCD. Notice how adding a single guest has basically doubled the amount of work you have to do. It would require 31 conversations for 5 guests, and 63 for 6 guests. This category of problems is **exponential** or **$O(2^n)$**, and algorithms in this category are typically avoided because their runtimes get very ugly even for relatively small data sizes. You might recall that we discussed the towers of Hanoi in the Living with Cyber series. The best solution to Towers of Hanoi falls in this category. 
 
@@ -119,7 +119,7 @@ $T(n) = cn^2 + dn$    which means it is $O(n^2)$.
 
 Those were fairly straight forward. What about these ones?
 
-```{.default}
+```java
 for (k=0; k<n/2; k++)
 { 
     ...  // This statement occurs n/2 times
@@ -129,7 +129,7 @@ for (k=0; k<n/2; k++)
     }
 }
 ```
-$T(n) = (cn^3 +dn)/2$ which means it is $O(n^3)$.
+$T(n) = \frac{cn^3 +dn}{2}$ which means it is $O(n^3)$.
 
 ```java
 for (k=0; k<n/2; k++)
@@ -141,7 +141,7 @@ for (j=0; j<n*n; j++)
     ...  //This statement occurs n*n = n^2 times
 }
 ```
-$T(n) = cn^2 +(dn)/2$ which means it is $O(n^2)$.
+$T(n) = cn^2 +\frac{dn}{2}$ which means it is $O(n^2)$.
 
 ```java
 k = n;
